@@ -66,24 +66,5 @@ save_single_parquet(doctors_c, base, "doctors")
 save_single_parquet(appts_c, base, "appointments")
 save_single_parquet(treats_c, base, "treatments")
 save_single_parquet(bill_c, base, "billing")
-# 
-# # joins
-# ap_pat        = appts_c.join(patients_c, "patient_id", "inner")
-# ap_pat_doc    = ap_pat.join(doctors_c, "doctor_id", "inner")
-# ap_pat_doc_tr = ap_pat_doc.join(treats_c, "appointment_id", "inner")
-# final_join    = ap_pat_doc_tr.join(bill_c, ["patient_id","treatment_id"], "inner").dropDuplicates()
-
-# # write curated Parquet
-# final_join.write.mode("overwrite").parquet(f"{args.out}/curated_parquet")
-
-# # optional summaries for your 5 questions
-# from pyspark.sql.functions import count, avg, month, to_date
-# summary_by_doctor = (final_join.groupBy("doctor_id")
-#                      .agg(count("*").alias("n_cases"), avg("cost").alias("avg_cost")))
-# summary_by_doctor.write.mode("overwrite").parquet(f"{args.out}/summary_by_doctor")
-
-# final_join.withColumn("month", month(to_date(col("appointment_date"))))\
-#           .groupBy("month").count()\
-#           .write.mode("overwrite").parquet(f"{args.out}/appts_by_month")
 
 spark.stop()

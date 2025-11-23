@@ -1,0 +1,8 @@
+pyspark==3.5.3
+torch
+faiss-cpu
+typing_extensions
+bitsandbytes
+peft
+sentence_transformers
+datasets

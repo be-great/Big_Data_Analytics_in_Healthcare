@@ -63,4 +63,4 @@ def load_model():
     model = PeftModel.from_pretrained(base_model, ADAPTER_PATH)
     model.eval()
     print("LoRA/Glora model loaded on GPU!")
-    return model, kb_indexes, kb_facts
+    return model, kb_indexes, kb_facts, embedder, tokenizer

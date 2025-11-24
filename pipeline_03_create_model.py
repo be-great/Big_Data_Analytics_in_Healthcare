@@ -49,7 +49,7 @@ test_data = data.orderBy(col("month").desc()).limit(n_test_months).orderBy("mont
 rf = RandomForestRegressor(labelCol="num_patients", featuresCol="features",
                            numTrees=100, maxDepth=5, seed=42)
 model = rf.fit(train_data)
-
+model.save("data/output/visitor_predict_model")
 # ------------------ Teacher forcing test ------------------
 test_rows = test_data.collect()
 test_features = []

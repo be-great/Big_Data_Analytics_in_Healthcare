@@ -155,11 +155,11 @@ heatmaps.
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements
 
 
-##  motivations
+##  Motivations
 
 
 
-## technologies used
+## Technologies used
 
 
 
@@ -176,27 +176,27 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 
 - NVIDIA "CUDA on WSL" 
 
-## Files flow structure
+## Files Flow Structure
 
-1- setup_env.py : setup enviroment install pyspark and hadoop to the wsl
-2- init.sh : create python env and install need python dependency and run the scripts
-3- pipeline_01_data_process.py: process the big data by lower case , remove unwanted symobles and remove duplicates and save it as parquet
-4- data_analysis.py : load parquets files Answer those scenarios:
-    A — Which gender goes to the hospital more?
-    B — Which hospital branch has the most experienced doctors?
-    C — Which specialization dominates the others?
-    D — What is the most common reason for visits?
-    E — What is the ranking of treatments by cost?
-5- pipeline_02_faiss.py: create the knowledge bases
-6- pipeline_03_create_model.py: create the visitor prediction model
-7- pipeline_04_qlora.py: adjust the model to domain specific
-8- pipeline_05_domain_classifier.py: create a query classify model 
-9- knowledge_evaluate.py: faiss knowledge base evlaution 
-10- chat.py : the chat ai  
+1- **setup_env.py**: Set up environment, install PySpark and Hadoop on WSL.  
+2- **init.sh**: Create Python environment, install needed Python dependencies, and run the scripts.  
+3- **pipeline_01_data_process.py**: Process the big data by converting to lowercase, removing unwanted symbols, removing duplicates, and saving it as Parquet.  
+4- **data_analysis.py**: Load Parquet files and answer the following scenarios:  
+      A — Which gender goes to the hospital more?  
+      B — Which hospital branch has the most experienced doctors?  
+      C — Which specialization dominates the others?  
+      D — What is the most common reason for visits?  
+      E — What is the ranking of treatments by cost?  
+5- **pipeline_02_faiss.py**: Create the knowledge bases.  
+6- **pipeline_03_create_model.py**: Create the visitor prediction model.  
+7- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
+8- **pipeline_05_domain_classifier.py**: Create a query classification model.  
+9- **knowledge_evaluate.py**: FAISS knowledge base evaluation.  
+10- **chat.py**: The chat AI.  
 ## Time processing 
 - pyspark : 8 min
 
-## future work :
+## Future work :
 
 1- add grammer correcter
 

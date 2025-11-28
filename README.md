@@ -47,7 +47,7 @@ healthcare organizations facing new opportunities, one of them is to improve the
 
 - Article link:[ https://www.techscience.com/cmc/v82n1/59229](https://link.springer.com/article/10.1186/s40537-020-00384-9)
 
-### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction (2022)
+### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction
 *Focuses on real-time health-status prediction using streaming IoT data combined with historical records.*
 
 ### Methods
@@ -73,50 +73,52 @@ healthcare organizations facing new opportunities, one of them is to improve the
 - Article link: [https://doi.org/10.32604/cmc.2022.019458](https://doi.org/10.32604/cmc.2022.019458)
 
 
-### 3.Data formats in analytical DBMSs: performance trade-offs and future directions 
-*Evaluates the suitability of three common formats (Apache Parquet, Apache ORC, and Apache Arrow) for use inside analytical DBMSs and Identifies features important for efficient querying (encoding, compression, data access) and explores trade‑offs between them.*
-### Methods  
-- Comparative analysis of the three formats across dimensions: compression ratio, transcoding throughput, data access cost, end‑to‑end query subexpressions.
-- Benchmarks using real‑world datasets and analytic workloads (TPC‑DS, embedding/RAG datasets) to evaluate encoding, compression, and access performance.
+### 3. Apache Spark for Analysis of Electronic Health Records: A Case Study of Diabetes Management
+*Applies Spark to large-scale EHR data to improve diabetes prediction and management.*
+
+### Methods
+- Real EHR datasets processed with Apache Spark.  
+- Data preprocessing, feature extraction, and ML model training.  
 
 ### Technologies
+- Apache Spark (distributed + in-memory processing).  
+- Machine-learning modules.  
+- Electronic Health Records (EHR).  
 
-- **Parquet (open columnar format):** uses dictionary encoding, run-length encoding, and bit-packing, and supports zone maps for efficient data skipping.  
-- **ORC:** an on-disk columnar format optimized for read-heavy analytics, with bloom filters and fine-grained in-memory metadata for fast queries.  
-- **Arrow:** an in-memory columnar format designed for fast inter-process communication (IPC) and analytics, but with less built-in encoding and compression.
-### Results Obtained
-- Parquet achieved superior compression: “reduce the size of the column data to about **13%** of the original” in one dataset.  
-- ORC achieved ~27% of original size in the same test, Ar0row actually increased size by ~7% under default settings.  
-- In data access (projection/filter), ORC often performed best for high selectivity queries, but Parquet performed better for very low selectivity due to fine‑grained skipping.
-- Embedding‑dataset tests showed none of the formats fully optimal: “current formats do not adequately handle … embedding datasets.”
-### Suggestions For Future Work
-
-- Opportunity to **co‑design a unified in‑memory and on‑disk representation** rather than separate formats.  
-- Improve support for **high‑dimensional, high‑entropy, high‑precision embeddings** in storage formats.  
-- Further exploration of **workload‑aware format tuning (encoding/compression)** and pushing computation into the encoded domain.
-
-- Article link: https://link.springer.com/article/10.1007/s00778-025-00911-1
-
-
-### 4. A systematic review on big data applications and scope for industrial processing and healthcare sectors
-*Reviews “data collection, analyzing, processing, and viewing” to explore big data in industrial processing and healthcare sectors.*
-
-### Methods 
-The authors conduct a systematic review based on the big-data life cycle, examining works related to “data collection,” “data integration,” “data preparation,” “data analysis,” and “data reuse.”
-### Technologies
-- machine learning, deep learning
-- natural language generation
-- metaheuristic algorithms such as “PSO” and the “firefly algorithm,”
-- big-data frameworks like “Hadoop,” “Spark,” and “MapReduce.”
 ### Results obtained
-The artical identifies major challenges such as "data cleaning and outlier analysis." It reports that big data can enhance
- - management (general management decision making)
- - patient-care services 
- - operational efficiency
-### Suggestions for future work :
-The authors propose developing “an optimization-based data cleaning model” and “an outlier removal model,” and recommend further research on scalable big-data platforms and advanced learning approaches including “unsupervised, semi-supervised, and streaming-based models.”
-    
-- Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-023-00808-2
+- Efficient processing of large EHR datasets.  
+- Scalable analytics enabling diabetes prediction and management.  
+
+### Suggestions for future work
+- Data integration and privacy improvements.  
+- Expanding datasets across multiple hospitals.  
+- Enhancing model interpretability for clinical deployment.  
+
+- Article link: https://doi.org/10.18280/ria.370616
+
+### 4. Apache Spark in Healthcare: Advancing Data-Driven Innovations and Better Patient Care (2023)
+*Explores Spark-based pipelines across multiple healthcare applications, including EHR analysis and predictive analytics.*
+
+### Methods
+- Case studies covering EHR management, predictive analytics, remote monitoring, and personalized medicine.  
+- Spark-based pipelines for data preprocessing and ML/AI analysis.  
+
+### Technologies
+- Apache Spark (batch + streaming).  
+- Healthcare datasets: EHR, imaging, remote monitoring.  
+- ML/AI frameworks integrated with Spark.  
+
+### Results obtained
+- Efficient analysis of large-scale healthcare datasets.  
+- Data-driven insights enabling better patient care.  
+- Improved predictive analytics across multiple applications.  
+
+### Suggestions for future work
+- Real-time analytics and IoMT integration.  
+- Data security, privacy, and interoperability.  
+- Scalability and ethical compliance.  
+
+- Article link: https://doi.org/10.14569/IJACSA.2023.0140665
 
 
 ### 5.  A Hybrid Retrieval-And-Generation Framework For Radiology Report Summarization With Faiss Indexing and T5 Transformers 

@@ -47,49 +47,30 @@ healthcare organizations facing new opportunities, one of them is to improve the
 
 - Article link:[ https://www.techscience.com/cmc/v82n1/59229](https://link.springer.com/article/10.1186/s40537-020-00384-9)
 
-## 2. The Faiss library
- *The Faiss library is dedicated to vector similarity search, a core functionality of vector databases*
+### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction (2022)
+*Focuses on real-time health-status prediction using streaming IoT data combined with historical records.*
 
-### Method for FAISS for similarity search
-
-#### A. Exact Search Methods (for exact nearest neighbor search)
-- Flat (Brute‑Force)
-
-#### B. Graph-Based ANN Methods (for fast approximate nearest neighbor search using graphs)
-- HNSW
-- NSG
-
-#### C. Cluster-Based ANN Methods (for approximate nearest neighbor search using clustering)
-- IVF (Inverted file) and its variants: IVF + PQ, IVF + SQ, IVF + OPQ, IVF + RQ/AQ, IVF + PQ + refinement ("+R")
-#### D. Quantization-Based Methods (for memory-efficient vector compression)
-- Scalar Quantization (SQ)
-- Product Quantization (PQ)
-- Optimized Product Quantization (OPQ)
-- Residual / Additive Quantization (RQ / AQ)
-- Multi-codebook Quantization
-
-#### E. Hash-Based
- Methods (for fast search using hash-based vector grouping)
-- LSH
-- Binary Flat
-- Binary IVF
-- Binary HNSW
-- Binary Hash / Multi-Hash
+### Methods
+- Real-time health-status prediction using Spark Streaming.
+- Feature extraction from sensor streams and historical records.
+- Machine-learning classification for health risk prediction.
 
 ### Technologies
-  - Hierarchical clustering and vector compression
-  - Collection of C++ source files
-  - Python wrapper
+- Apache Spark (streaming + batch processing).
+- IoT sensor data.
+- Spark-based machine learning modules.
+
 ### Results obtained
-1. Faiss can handle million to billion-scale vector datasets
-2. Faiss enables efficient similarity search over large embedding collections.
-3. Balances speed, accuracy, and memory usage by using the above methods
+- Real-time processing of high-velocity health data.
+- Timely alerts for potential health risks.
+- Combining historical and streaming data improved prediction accuracy.
 
-### suggestions for future work:
-Expanding the focus to include novel quantization techniques, better hardware support for some
-indexe and new indexing forms, such as associative vector memories for transformer architectures 
+### Suggestions for future work
+- Include more health indicators for broader prediction.
+- Scale system to larger IoT deployments.
+- Evaluate model performance across multiple institutions.
 
-- Article link: https://www.researchgate.net/publication/396647489_THE_FAISS_LIBRARY
+- Article link: [https://doi.org/10.32604/cmc.2022.019458](https://doi.org/10.32604/cmc.2022.019458)
 
 
 ### 3.Data formats in analytical DBMSs: performance trade-offs and future directions 

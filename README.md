@@ -96,7 +96,7 @@ healthcare organizations facing new opportunities, one of them is to improve the
 
 - Article link: https://doi.org/10.18280/ria.370616
 
-### 4. Apache Spark in Healthcare: Advancing Data-Driven Innovations and Better Patient Care (2023)
+### 4. Apache Spark in Healthcare: Advancing Data-Driven Innovations and Better Patient Care
 *Explores Spark-based pipelines across multiple healthcare applications, including EHR analysis and predictive analytics.*
 
 ### Methods

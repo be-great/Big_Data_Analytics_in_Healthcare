@@ -1,5 +1,5 @@
 # Designing Localized Lightweight LLMsfor Domains Specific Application
-
+This project develops a lightweight, domain-specific AI system that integrates hospital visitor prediction, knowledge-base creation, and interactive querying to support efficient data-driven decision-making.
 ### Abstract
 
 As large language models (LLMs) continue to be adopted across a range of real-world applications, several ongoing challenges have become more noticeable, particularly those concerning scalability, data privacy, and computational cost. While high-end models such as GPT-4 and LLaMA-3 are known for their strong general performance, they often face difficulties when applied to focused domains or environments with limited computing resources. Our evaluation shows that LLMs can perform on par with considerably larger systems, yet offer advantages in inference speed, storage use, and the protection of sensitive information. Taken together, these results present a grounded pathway for developing compact and privacy-aware language models that can operate effectively.
@@ -136,7 +136,8 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 
 ## Connection to Current project:-
-This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements
+This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements.
+
 
 
 ##  Motivations
@@ -154,7 +155,14 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 
 ## Technologies :- 
 
-
+- PySpark + Apache Spark: distributed data processing.
+- Parquet: efficient storage format.
+- FAISS: semantic knowledge retrieval.
+- QLoRA: lightweight LLM fine-tuning
+# Suggestions for future work
+- Real-time visitor prediction with streaming data.
+- Expand knowledge base across multiple hospital domains.
+- Improve LLM interpretability and prediction accuracy.
 
 ## Enviroment: 
 

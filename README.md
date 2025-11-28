@@ -10,27 +10,40 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ## Literature research
 
 ### 1. Predictors of outpatients’ no-show: big data analytics using apache spark
-*Accurate and efficient fine-tuning of quantized large language models via Balanced Low-Rank Adaptation (BLoRA).*
+healthcare organizations facing new opportunities, one of them is to improve the quality of healthcare. The main challenges is predictive analysis using techniques capable of handle the huge data generated.That is why a big data framework for identifying subject outpatients’ no-show been developed.
 ### Methods:
-- Q‑BLoRA: balances the adapter input/output dimensions and adapter rank to address underfitting in quantized LLMs.
+- Large-scale analysis of 2,011,813 outpatient appointments using distributed processing.
 
-- QA‑BLoRA: quantization-aware fine-tuning that aligns adapters with block-wise quantization, allowing merging back into the quantized model for inference efficiency.
+- Construction of predictive variables capturing behavioral, temporal, and operational characteristics.
 
+- Application of Spark MLlib classifiers: Random Forest, Gradient Boosting, Logistic Regression, SVM, and MLP.
+
+- Evaluation using train–test splits and 10-fold cross-validation.
 ### Technologies: 
-- LoRA, quantization (block-wise), applied on LLaMA, LLaMA2, Mistral, and Gemma models.
+- Apache Spark (parallel processing).
+
+- Spark MLlib (classification pipeline).
+
+- Hospital administrative datasets at million-record scale.
 
 ### Results obtained:
 
-- **Layer type matters:** MLP layers are robust to rank reduction; self-attention layers are more sensitive.  
-- **Layer depth is less important:** Accuracy doesn’t vary significantly across different depths.  
-- **Efficient adapters:** Memory usage can be greatly reduced without hurting performance.  
-- **Parameter reduction strategy:** Reducing parameters in larger layers preserves accuracy better than in smaller layers.
+- Overall no-show rate: 26.7%.
 
+- Primary predictors: prior no-shows, lead-time, prior attended visits, medical department.
+
+- Secondary predictors: appointment type, clinic, month of appointment.
+
+- Low-impact variables: gender, distance, nationality, reservation category.
+
+- Gradient Boosting achieved the highest performance (≈ 79% accuracy, ≈ 0.81 AUC).
+
+- Clear trade-off between computational efficiency and predictive performance across models.
 ### Suggestions For Future Work :
     
-- Further exploration of the balancing factor for different models.
-- Extend to other quantization schemes and adapter merging strategies.
-
+• Incorporating additional behavioral and contextual predictors
+• Developing models for real-time no-show prediction within appointment systems
+• Extending the analysis across diverse healthcare settings
 
 - Article link:[ https://www.techscience.com/cmc/v82n1/59229](https://link.springer.com/article/10.1186/s40537-020-00384-9)
 

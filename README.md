@@ -10,7 +10,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ## Literature research
 
 ### 1. Predictors of Outpatients’ No-show: Big Data Analytics using Apache Spark (2020)
-*Focuses on predicting outpatient no-shows using big data analytics and Spark MLlib.*
+*The study aims to identify key predictors of outpatient appointment no-shows using large-scale data analytics with Apache Spark.*
 
 ### Methods
 - Large-scale analysis of 2,011,813 outpatient appointments.  
@@ -36,7 +36,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-020-00384-9
 
 ### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction
-*Focuses on real-time health-status prediction using streaming IoT data combined with historical records.*
+*The work aims to build a real-time health-status prediction framework that processes streaming IoT data efficiently using Apache Spark.*
 
 ### Methods
 - Real-time health-status prediction using Spark Streaming.
@@ -62,7 +62,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 
 ### 3. Apache Spark for Analysis of Electronic Health Records: A Case Study of Diabetes Management
-*Applies Spark to large-scale EHR data to improve diabetes prediction and management.*
+*The study aims to demonstrate how Apache Spark can enhance large-scale EHR analytics for improving diabetes prediction and management.*
 
 ### Methods
 - Real EHR datasets processed with Apache Spark.  
@@ -85,7 +85,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Article link: https://doi.org/10.18280/ria.370616
 
 ### 4. Apache Spark in Healthcare: Advancing Data-Driven Innovations and Better Patient Care
-*Explores Spark-based pipelines across multiple healthcare applications, including EHR analysis and predictive analytics.*
+*The goal is to review how Apache Spark enables scalable, data-driven analytics to improve healthcare operations and patient outcomes.*
 
 ### Methods
 - Case studies covering EHR management, predictive analytics, remote monitoring, and personalized medicine.  
@@ -110,7 +110,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 
 ### 5. Cloud-based Real-time SBP & HR Prediction using TCN and Apache Spark (2025)
-*Focuses on real-time prediction of systolic blood pressure (SBP) and heart rate (HR) from streaming physiological data using cloud-based Spark pipelines.*
+*The research aims to build a real-time cloud-based framework for predicting systolic blood pressure and heart rate using Spark streaming and deep learning.*
 
 ### Methods
 - Real-time SBP and HR prediction from streaming physiological data.  

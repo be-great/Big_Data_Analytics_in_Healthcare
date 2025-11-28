@@ -9,43 +9,31 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 ## Literature research
 
-### 1. Predictors of outpatients’ no-show: big data analytics using apache spark
-healthcare organizations facing new opportunities, one of them is to improve the quality of healthcare. The main challenges is predictive analysis using techniques capable of handle the huge data generated.That is why a big data framework for identifying subject outpatients’ no-show been developed.
-### Methods:
-- Large-scale analysis of 2,011,813 outpatient appointments using distributed processing.
+### 1. Predictors of Outpatients’ No-show: Big Data Analytics using Apache Spark (2020)
+*Focuses on predicting outpatient no-shows using big data analytics and Spark MLlib.*
 
-- Construction of predictive variables capturing behavioral, temporal, and operational characteristics.
+### Methods
+- Large-scale analysis of 2,011,813 outpatient appointments.  
+- Predictive variables capturing behavioral, temporal, and operational characteristics.  
+- Applied Spark MLlib classifiers: Random Forest, Gradient Boosting, Logistic Regression, SVM, and MLP.  
 
-- Application of Spark MLlib classifiers: Random Forest, Gradient Boosting, Logistic Regression, SVM, and MLP.
+### Technologies
+- Apache Spark (parallel processing).  
+- Spark MLlib.  
+- Hospital administrative datasets at million-record scale.  
 
-- Evaluation using train–test splits and 10-fold cross-validation.
-### Technologies: 
-- Apache Spark (parallel processing).
+### Results obtained
+- Overall no-show rate: 26.7%.  
+- Top predictors: prior no-shows, lead-time, prior attended visits, medical department.  
+- Secondary predictors: appointment type, clinic, month.  
+- Gradient Boosting achieved highest performance (≈79% accuracy, ≈0.81 AUC).  
 
-- Spark MLlib (classification pipeline).
+### Suggestions for future work
+- Include additional behavioral and contextual predictors.  
+- Develop real-time no-show prediction models.  
+- Extend analysis across diverse healthcare settings.  
 
-- Hospital administrative datasets at million-record scale.
-
-### Results obtained:
-
-- Overall no-show rate: 26.7%.
-
-- Primary predictors: prior no-shows, lead-time, prior attended visits, medical department.
-
-- Secondary predictors: appointment type, clinic, month of appointment.
-
-- Low-impact variables: gender, distance, nationality, reservation category.
-
-- Gradient Boosting achieved the highest performance (≈ 79% accuracy, ≈ 0.81 AUC).
-
-- Clear trade-off between computational efficiency and predictive performance across models.
-### Suggestions For Future Work :
-    
-• Incorporating additional behavioral and contextual predictors
-• Developing models for real-time no-show prediction within appointment systems
-• Extending the analysis across diverse healthcare settings
-
-- Article link:[ https://www.techscience.com/cmc/v82n1/59229](https://link.springer.com/article/10.1186/s40537-020-00384-9)
+- Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-020-00384-9
 
 ### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction
 *Focuses on real-time health-status prediction using streaming IoT data combined with historical records.*
@@ -121,31 +109,31 @@ healthcare organizations facing new opportunities, one of them is to improve the
 - Article link: https://doi.org/10.14569/IJACSA.2023.0140665
 
 
-### 5.  A Hybrid Retrieval-And-Generation Framework For Radiology Report Summarization With Faiss Indexing and T5 Transformers 
-*A Retrieval-Augmented Generation (RAG) approach to medical report summarization by integrating a FAISS-based semantic search engine with a small T5 generative model.*
+### 5. Cloud-based Real-time SBP & HR Prediction using TCN and Apache Spark (2025)
+*Focuses on real-time prediction of systolic blood pressure (SBP) and heart rate (HR) from streaming physiological data using cloud-based Spark pipelines.*
 
-### Methods 
-Use of Sentence-BERT to embed the “Findings” section of radiology reports from the MIMIC-III dataset, which are then indexed using FAISS to retrieve semantically similar cases.
+### Methods
+- Real-time SBP and HR prediction from streaming physiological data.  
+- Multi-task Temporal Convolutional Network (TCN) compared with single-task models.  
+- Data pipeline implemented with Apache Spark and Kafka.  
+
 ### Technologies
-- **FAISS** for approximate nearest-neighbor search  
-- **T5 transformer** for text summarization  
-- **Vector embeddings** of radiology report sections  
-- Python-based machine learning libraries (**PyTorch**, **Hugging Face Transformers**)
+- Temporal Convolutional Network (TCN).  
+- Apache Spark streaming.  
+- MIMIC‑III dataset.  
 
 ### Results obtained
-FAISS + T5 improves lexical fidelity, semantic consistency, and clinical relevance over traditional summarization methods, but some factual accuracy issues remain.
-### Suggestions for future work :
-- Integrating advanced retrieval techniques such as Dense Passage Retrieval (DPR), BM25 hybrid scoring, or domain-adaptive retrievers could yield more clinically coherent contextual inputs
-- Leveraging larger encoder-decoder architectures or domain-pretrained models like BioBART or ClinicalT5 for further improve
-summarization accuracy, especially in edge cases.
-- Improve interpretability by integrating explanation modules, attention
-heatmaps.
-- Article link: https://dergipark.org.tr/en/pub/sdufenbed/issue/94267/1739565
+- Multi-task TCN outperforms single-task models (lower RMSE/MAE).  
+- Scalable, low-latency, real-time monitoring achieved.  
+- Demonstrates feasible integration of deep learning, streaming, and cloud/fog computing.  
 
-  
-  
-  
-  - *keywords*: parquet, faiss, glora
+### Suggestions for future work
+- Extend to multi-parameter physiological monitoring.  
+- Conduct real-world clinical validation.  
+- Explore longer forecasting horizons and more complex models.  
+
+- Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-025-01207-5
+
 
 ## Connection to Current project:-
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements

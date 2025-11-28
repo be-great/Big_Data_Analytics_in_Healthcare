@@ -9,7 +9,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 ## Literature research
 
-### 1. Optimizing Fine-Tuning in Quantized Language Models: An In-Depth Analysis of Key Variables
+### 1. Predictors of outpatients’ no-show: big data analytics using apache spark
 *Accurate and efficient fine-tuning of quantized large language models via Balanced Low-Rank Adaptation (BLoRA).*
 ### Methods:
 - Q‑BLoRA: balances the adapter input/output dimensions and adapter rank to address underfitting in quantized LLMs.
@@ -32,7 +32,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Extend to other quantization schemes and adapter merging strategies.
 
 
-- Article link: https://www.techscience.com/cmc/v82n1/59229
+- Article link:[ https://www.techscience.com/cmc/v82n1/59229](https://link.springer.com/article/10.1186/s40537-020-00384-9)
 
 ## 2. The Faiss library
  *The Faiss library is dedicated to vector similarity search, a core functionality of vector databases*

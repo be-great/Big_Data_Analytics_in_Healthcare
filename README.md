@@ -141,16 +141,9 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 
 
 ##  Motivations
+Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.
 
 
-
-## Technologies used
-
-
-
-## Methods 
-![img](imgs/meth.png)
-## Findings obtained
 
 
 ## Technologies :- 
@@ -163,6 +156,12 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 - Real-time visitor prediction with streaming data.
 - Expand knowledge base across multiple hospital domains.
 - Improve LLM interpretability and prediction accuracy.
+
+
+## Methods 
+![img](imgs/meth.png)
+## Findings obtained
+
 
 ## Enviroment: 
 
@@ -187,10 +186,3 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 10- **chat.py**: The chat AI.  
 ## Time processing 
 - pyspark : 8 min
-
-## Future work :
-
-1- add grammer correcter
-
-## TODO
-- Add the model output of the classify to estimated the next month coming visitor .

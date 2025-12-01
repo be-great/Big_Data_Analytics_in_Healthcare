@@ -14,25 +14,40 @@ spark = SparkSession.builder.appName("HospitalCurate").getOrCreate()
 Save the parquet in the name 
 you want
 """
+import os
+import shutil
+import duckdb
+
 def save_single_parquet(df, out_dir, name):
     """
-    Save a Spark DataFrame as a single Parquet file using DuckDB.
-
+    Save a Spark DataFrame as a single Parquet file using DuckDB safely.
+    
     Parameters:
     df : Spark DataFrame
     out_dir : folder where the file should be saved
     name : desired file name (without .parquet)
     """
+    temp_path = os.path.join(out_dir, "tmp_folder")
+    os.makedirs(temp_path, exist_ok=True)
+
+    # Write Spark DataFrame to temporary folder (coalesce to 1 partition)
+    df.coalesce(1).write.mode("overwrite").parquet(temp_path)
+
+    # Find the single part file
+    part_file = [f for f in os.listdir(temp_path) if f.endswith(".parquet")][0]
+    input_file = os.path.join(temp_path, part_file)
+
     # Final file path
-    final_file = out_dir + f"{name}.parquet"
+    final_file = os.path.join(out_dir, f"{name}.parquet")
 
-    # Convert Spark DataFrame to Pandas
-    df_single = df.coalesce(1).toPandas()
+    # Use DuckDB to copy Parquet (handles timestamps/INT64 safely)
+    duckdb.sql(f"COPY (SELECT * FROM '{input_file}') TO '{final_file}' (FORMAT PARQUET)")
 
-    # Use DuckDB to save as single parquet
-    duckdb.from_df(df_single).to_parquet(final_file)
+    # Remove temporary folder
+    shutil.rmtree(temp_path)
 
     print(f"Saved single Parquet file at: {final_file}")
+
 def read_csv(name):
     return (spark.read
             .option("header", True)

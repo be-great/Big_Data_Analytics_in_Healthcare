@@ -50,3 +50,10 @@ def treatments_by_cost(bill_c, treats_c):
                  .groupBy("treatment_type") \
                  .agg(avg("cost").alias("avg_cost")) \
                  .orderBy(col("avg_cost").desc())
+
+# patients_c, doctors_c, appts_c, treats_c, bill_c= load_data()
+# gender_distribution(patients_c)
+# most_experienced_branch(doctors_c)
+# top_specialization(doctors_c)
+# common_visit_reason(appts_c)
+# treatments_by_cost(bill_c, treats_c)

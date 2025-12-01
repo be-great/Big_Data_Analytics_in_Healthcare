@@ -1,11 +1,10 @@
 # Designing Localized Lightweight LLMsfor Domains Specific Application
 This project develops a lightweight, domain-specific AI system that integrates hospital visitor prediction, knowledge-base creation, and interactive querying to support efficient data-driven decision-making.
-### Abstract
+### introduction
 
 As large language models (LLMs) continue to be adopted across a range of real-world applications, several ongoing challenges have become more noticeable, particularly those concerning scalability, data privacy, and computational cost. While high-end models such as GPT-4 and LLaMA-3 are known for their strong general performance, they often face difficulties when applied to focused domains or environments with limited computing resources. Our evaluation shows that LLMs can perform on par with considerably larger systems, yet offer advantages in inference speed, storage use, and the protection of sensitive information. Taken together, these results present a grounded pathway for developing compact and privacy-aware language models that can operate effectively.
 
 
-### Introduction 
 
 ## Literature research
 
@@ -135,11 +134,11 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-025-01207-5
 
 
-## Connection to Current project:-
+## Connection to Current project
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements.
 
-
-
+## The dataset that has been used is
+https://huggingface.co/datasets/mile22/hospital_record_csv
 ##  Motivations
 Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.
 
@@ -188,13 +187,13 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 1- **setup_env.py**: Set up environment, install PySpark and Hadoop on WSL.  
 2- **init.sh**: Create Python environment, install needed Python dependencies, and run the scripts.  
 3- **pipeline_01_data_process.py**: Process the big data by converting to lowercase, removing unwanted symbols, removing duplicates, and saving it as Parquet.  
-4- **data_analysis.py**: Functions used for Loading Parquet files and answer the 5 scenarios questions
-5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios
-6- **knowledge_evaluate.py**: Evaluate the knowledge bases 
-6- **pipeline_03_create_model.py**: Create the visitor prediction model.  
-7- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
-8- **pipeline_05_domain_classifier.py**: Create a query classification model.  
-9- **knowledge_evaluate.py**: FAISS knowledge base evaluation.  
-10- **chat.py**: The chat AI.  
+4- **data_analysis.py**: Functions used for Loading Parquet files and answer the 5 scenarios questions.
+5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios.
+6- **knowledge_evaluate.py**: Evaluate the knowledge bases. 
+7- **pipeline_03_create_model.py**: Create the visitor prediction model.  
+8- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
+9- **pipeline_05_domain_classifier.py**: Create a query classification model.  
+10- **knowledge_evaluate.py**: FAISS knowledge base evaluation.  
+11- **chat.py**: The chat AI.  
 ## Time processing 
 - pyspark : 8 min

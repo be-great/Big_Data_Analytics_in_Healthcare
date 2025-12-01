@@ -189,7 +189,8 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 2- **init.sh**: Create Python environment, install needed Python dependencies, and run the scripts.  
 3- **pipeline_01_data_process.py**: Process the big data by converting to lowercase, removing unwanted symbols, removing duplicates, and saving it as Parquet.  
 4- **data_analysis.py**: Functions used for Loading Parquet files and answer the 5 scenarios questions
-5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios questions
+5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios
+6- **knowledge_evaluate.py**: Evaluate the knowledge bases 
 6- **pipeline_03_create_model.py**: Create the visitor prediction model.  
 7- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
 8- **pipeline_05_domain_classifier.py**: Create a query classification model.  

@@ -29,7 +29,7 @@ def load_kb(name):
     KB_INDEXES[name] = faiss.read_index(BASE_KB + f"{name}.index")
     KB_TEXTS[name] = np.load(BASE_KB + f"{name}_facts.npy", allow_pickle=True)
     df = pd.read_parquet(BASE_PARQUET + f"{name}.parquet").fillna("")
-    id_colssssss = df.columns[0]
+    id_col = df.columns[0]
     KB_IDS[name] = list(df[id_col].astype(str))
     KB_DFS[name] = df
     return df
@@ -100,6 +100,7 @@ def retrieve_from_kb(query, kb_name, top_k=TOP_K):
 # EVALUATION
 # -------------------------
 def evaluate_all_kbs(all_kbs, top_k=TOP_K, num_samples=NUM_SAMPLES):
+    global KB_INDEXES, KB_TEXTS, KB_IDS, KB_DFS
     all_results = []
     out_of_kb_correct = 0
     out_of_kb_total = 0

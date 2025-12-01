@@ -161,8 +161,22 @@ Before the rise of machine learning, earlier models struggled to understand the 
 
 ## Methods 
 ![img](imgs/meth.png)
-## Findings obtained
 
+## Questions that used for data analyzing:-
+A — Which gender goes to the hospital more?
+B — Which hospital branch has the most experienced doctors?
+C — Which specialization dominates the others?
+D — What is the most common reason for visits?
+E — What is the ranking of treatments by cost?
+
+Then with the help of RandomForestRegressor algorithm, we predict the expected number of visitors for the next month to help the healthcare management system prepare and allocate resources efficiently.
+## Findings obtained
+### Data analyzing:-
+![gender](imgs/result_1_gender.png)
+![experience](imgs/experience_doctor.png)
+![special_dominates](imgs/speciliest_dominace.png)
+![reason_for_visit](imgs/reason_for_visit.png)
+![cost](imgs/treatment_cost.png)
 
 ## Enviroment: 
 

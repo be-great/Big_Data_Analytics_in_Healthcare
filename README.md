@@ -177,7 +177,8 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 ![special_dominates](imgs/speciliest_dominace.png)
 ![reason_for_visit](imgs/reason_for_visit.png)
 ![cost](imgs/treatment_cost.png)
-
+### Number of visitors prediction 
+![result2](imgs/result2.png)
 ## Enviroment: 
 
 - NVIDIA "CUDA on WSL" 
@@ -187,13 +188,8 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 1- **setup_env.py**: Set up environment, install PySpark and Hadoop on WSL.  
 2- **init.sh**: Create Python environment, install needed Python dependencies, and run the scripts.  
 3- **pipeline_01_data_process.py**: Process the big data by converting to lowercase, removing unwanted symbols, removing duplicates, and saving it as Parquet.  
-4- **data_analysis.py**: Load Parquet files and answer the following scenarios:  
-      A — Which gender goes to the hospital more?  
-      B — Which hospital branch has the most experienced doctors?  
-      C — Which specialization dominates the others?  
-      D — What is the most common reason for visits?  
-      E — What is the ranking of treatments by cost?  
-5- **pipeline_02_faiss.py**: Create the knowledge bases.  
+4- **data_analysis.py**: Functions used for Loading Parquet files and answer the 5 scenarios questions
+5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios questions
 6- **pipeline_03_create_model.py**: Create the visitor prediction model.  
 7- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
 8- **pipeline_05_domain_classifier.py**: Create a query classification model.  

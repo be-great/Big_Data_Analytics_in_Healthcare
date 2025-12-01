@@ -74,47 +74,90 @@ build_kb(
     lambda r: f"Billing record {r['bill_id']} with the patient id {r['patient_id']} dated {r['bill_date']} amount {r['amount']} paid via {r['payment_method']} (status {r['payment_status']})."
 )
 
-""""
+
+"""
 Kb for analysis contents
 """
 
-# Gender comparison KB
-gender_diff_text = f"{list(gender.keys())[0]} visits are {gender[list(gender.keys())[0]][0]}% higher than {gender[list(gender.keys())[0]][1]} visits."
+# ------------------ GENDER DISTRIBUTION ------------------
+gender = gender_distribution(patients)
+
+gender_rows = gender.collect()
+total_visits = sum(r["count"] for r in gender_rows)
+
+gender = {r["gender"]: round((r["count"] / total_visits) * 100, 2) for r in gender_rows}
+
+genders = list(gender.keys())
+g1, g2 = genders[0], genders[1]
+
+gender_diff_text = (
+    f"{g1} visits represent {gender[g1]}% compared to {gender[g2]}% for {g2}."
+)
+
 build_kb(
-    spark.createDataFrame([(0,)], ["id"]), "gender_comparison",  # dummy DF with one row
+    spark.createDataFrame([(0,)], ["id"]),
+    "gender_comparison",
     lambda r: gender_diff_text
 )
 
-# Hospital branches with most experienced doctors
-branch_text = f"Hospital branches that have the most experienced doctors are: {', '.join(hos_branch.keys())}."
+
+# ------------------ MOST EXPERIENCED BRANCH ------------------
+branch_rows = hos_branch.collect()
+branch_names = [r["hospital_branch"] for r in branch_rows]
+
+branch_text = (
+    "Hospital branches ranked by most experienced doctors: "
+    + ", ".join(branch_names)
+    + "."
+)
+
 build_kb(
     spark.createDataFrame([(0,)], ["id"]),
     "hospital_experience",
     lambda r: branch_text
 )
 
-# Top dominating specializations
-specializations_text = f"Top dominating specializations: {', '. join(top_spe[:5])}."
+
+# ------------------ TOP SPECIALIZATIONS ------------------
+spe_rows = top_spe.collect()
+top_spe_list = [r["specialization"] for r in spe_rows[:5]]
+
+specializations_text = (
+    "Top dominating specializations: " + ", ".join(top_spe_list) + "."
+)
+
 build_kb(
     spark.createDataFrame([(0,)], ["id"]),
     "top_specializations",
     lambda r: specializations_text
 )
 
-# Most common reasons for visits
-reasons_text = f"Most common reasons for visits: {', '.join(top_com_reason[:5])}."
+
+# ------------------ MOST COMMON REASONS FOR VISITS ------------------
+reason_rows = top_com_reason.collect()
+top_reason_list = [r["reason_for_visit"] for r in reason_rows[:5]]
+
+reasons_text = (
+    "Most common reasons for visits: " + ", ".join(top_reason_list) + "."
+)
+
 build_kb(
     spark.createDataFrame([(0,)], ["id"]),
     "top_reasons_for_visits",
     lambda r: reasons_text
 )
 
-# Most expensive treatment KB
-exp_treatment_name = list(exp_tre.keys())[0]
-exp_treatment_cost = list(exp_tre.values())[0]
+
+# ------------------ MOST EXPENSIVE TREATMENT ------------------
+exp_rows = exp_tre.collect()
+exp_name = exp_rows[0]["treatment_type"]
+exp_cost = round(exp_rows[0]["avg_cost"], 2)
+
 build_kb(
     spark.createDataFrame([(0,)], ["id"]),
     "expensive_treatment",
-    lambda r: f"The treatment '{exp_treatment_name}' is the most expensive, with an average cost of ${exp_treatment_cost}."
+    lambda r: f"The treatment '{exp_name}' is the most expensive, with an average cost of ${exp_cost}."
 )
+
+
 spark.stop()

@@ -2,6 +2,7 @@ import argparse
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, lower, trim
 import os, shutil
+import duckdb
 parser = argparse.ArgumentParser()
 parser.add_argument("--inbase", required=True, help="Base dir containing data_csv (local or hdfs://)")
 parser.add_argument("--out", required=True, help="Output Parquet folder (local or hdfs:///)")
@@ -14,23 +15,29 @@ Save the parquet in the name
 you want
 """
 def save_single_parquet(df, out_dir, name):
-    temp_path = os.path.join(out_dir, f"{name}_tmp")
-    final_path = os.path.join(out_dir, f"{name}.parquet")
+    """
+    Save a Spark DataFrame as a single Parquet file using DuckDB.
 
-    # Write to a temporary folder
-    df.coalesce(1).write.mode("overwrite").parquet(temp_path)
+    Parameters:
+    df : Spark DataFrame
+    out_dir : folder where the file should be saved
+    name : desired file name (without .parquet)
+    """
+    # Final file path
+    final_file = out_dir + f"{name}.parquet"
 
-    # Find the single .parquet file Spark created
-    file_name = [f for f in os.listdir(temp_path) if f.endswith(".parquet")][0]
+    # Convert Spark DataFrame to Pandas
+    df_single = df.coalesce(1).toPandas()
 
-    # Move and rename
-    shutil.move(os.path.join(temp_path, file_name), final_path)
-    shutil.rmtree(temp_path)
+    # Use DuckDB to save as single parquet
+    duckdb.from_df(df_single).to_parquet(final_file)
+
+    print(f"Saved single Parquet file at: {final_file}")
 def read_csv(name):
     return (spark.read
             .option("header", True)
             .option("inferSchema", True)
-            .csv(f"{args.inbase}/data_csv/{name}.csv"))
+            .csv(f"{args.inbase}/{name}.csv"))
 
 patients     = read_csv("patients")
 doctors      = read_csv("doctors")
@@ -60,7 +67,7 @@ doctors_c  = doctors_c.withColumnRenamed("first_name", "doctor_first_name")
 doctors_c  = doctors_c.withColumnRenamed("last_name", "doctor_last_name")
 
 # create the parquet
-base = f"{args.out}/curated_parquet"
+base = f"{args.out}/"
 save_single_parquet(patients_c, base, "patients")
 save_single_parquet(doctors_c, base, "doctors")
 save_single_parquet(appts_c, base, "appointments")

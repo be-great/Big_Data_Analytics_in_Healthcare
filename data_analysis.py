@@ -17,7 +17,7 @@ def load_data():
 
       # ===== 1️ Read the Parquet files =====
       base = f"data/curated_parquet"
-
+      #base = "../hospital_record/"
       patients_c  = spark.read.parquet(f"{base}/patients.parquet").na.fill("")
       doctors_c   = spark.read.parquet(f"{base}/doctors.parquet").na.fill("")
       appts_c     = spark.read.parquet(f"{base}/appointments.parquet").na.fill("")

@@ -7,3 +7,4 @@ peft
 sentence_transformers
 datasets
 prophet
+duckdb

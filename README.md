@@ -178,9 +178,35 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 ![cost](imgs/treatment_cost.png)
 ### Number of visitors prediction 
 ![result2](imgs/result2.png)
-## Enviroment: 
+### Faiss
+For evaluating knowledge base performance, a randomly selected subset of the dataset was used. Random sampling provides a representative overview of retrieval metrics while maintaining efficiency in analysis.precision, recall, MRR, and NDCG indicate the system’s effectiveness in retrieving relevant facts.
 
-- NVIDIA "CUDA on WSL" 
+![faiss](imgs/result3.png)
+
+
+#### In-KB Metrics
+- **Precision@k:** Fraction of top‑k retrieved facts that are correct.  
+- **Recall@k:** Fraction of all relevant facts that appear in the top‑k results.  
+- **MRR (Mean Reciprocal Rank):** Average of reciprocal ranks of the first correct fact; higher values indicate correct results appear earlier.  
+- **NDCG@k (Normalized Discounted Cumulative Gain):** Measures ranking quality, giving higher weight to relevant facts appearing at the top.  
+- **Top1_distance:** Embedding distance between the query and the closest retrieved fact.  
+- **Mean_topk_distance:** Average embedding distance across the top‑k retrieved facts.
+
+#### Out-of-KB Metrics
+- **Abstention Accuracy:** Fraction of queries not present in the KB that the system correctly identifies as absent.
+
+#### Analytic KB Metrics
+- **n_facts:** Number of facts in the KB.  
+- **in_mean:** Average embedding distance for in-KB queries.  
+- **noise_mean:** Average distance between random noise vectors and KB facts.  
+- **Cohen_d_noise:** Effect size between in-KB distances and noise distances; higher values indicate better separability.  
+- **Separable_pct_noise:** Fraction of noise distances that exceed in-KB distances, showing clear distinction.  
+- **AUC_noise:** Probability that an in-KB fact is closer to the query than a noise vector.
+
+
+## Project Setup Environment
+
+- Ubuntu 22.04 with NVIDIA CUDA on WSL
 
 ## Files Flow Structure
 
@@ -193,7 +219,4 @@ Then with the help of RandomForestRegressor algorithm, we predict the expected n
 7- **pipeline_03_create_model.py**: Create the visitor prediction model.  
 8- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
 9- **pipeline_05_domain_classifier.py**: Create a query classification model.  
-10- **knowledge_evaluate.py**: FAISS knowledge base evaluation.  
 11- **chat.py**: The chat AI.  
-## Time processing 
-- pyspark : 8 min

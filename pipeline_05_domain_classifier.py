@@ -11,6 +11,7 @@ from pyspark.mllib.evaluation import MulticlassMetrics
 import numpy as np
 import re
 
+KEEP_PREFIX = False # remove prefix like "speaker:" in the dataset
 # Function to extract only real conversation turns
 def extract_conversations(example):
     text = example['text']
@@ -57,9 +58,9 @@ def non_domain_dataset_prepear():
 def domain_dataset_prepear():
     file_path = "data/data_csv/MTS-Dialog-Automatic-Summaries-ValidationSet.csv"
     try:
-    df = pd.read_csv(file_path)
-    print("File loaded successfully!")
-    print(df.columns)
+        df = pd.read_csv(file_path)
+        print("File loaded successfully!")
+        print(df.columns)
     except FileNotFoundError:
         print(f"Error: The file '{file_path}' was not found. Please double-check the path and try again.")
     except Exception as e:
@@ -78,7 +79,7 @@ def domain_dataset_prepear():
 
         # Optional: save to CSV
         # pd.DataFrame({"message": domain_messages}).to_csv("domain_messages_flat.csv", index=False)
-        return domain messages
+        return domain_messages
 def regression_model_creation():
     domain_messages = domain_dataset_prepear()
     non_domain_messages = non_domain_dataset_prepear()

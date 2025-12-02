@@ -1,11 +1,12 @@
 from pyspark.sql import SparkSession, Row
 from pyspark.ml.classification import LogisticRegressionModel
-from pipeline_03_qlora import load_model
+from pipeline_04_qlora import load_model
 from pyspark.ml.regression import RandomForestRegressor
-
+from pyspark.ml.linalg import Vectors
+from pyspark.sql.functions import trunc, countDistinct
 
 visitor_model = RandomForestRegressor.load("data/output/visitor_predict_model")
-model_re =  LogisticRegressionModel.load(model_path)
+model_re =  LogisticRegressionModel.load("data/output/lr_model")
 model , kb_indexes, kb_facts, embedder, tokenizer = load_model()
 spark = SparkSession.builder \
     .appName("DomainQuestionChecker") \
@@ -37,8 +38,8 @@ def get_kb_name(query):
 
     elif "expensive treatment" in query or "most expensive" in query:
         return "expensive_treatment"
-    """For the prediction part"""
     elif "visitor prediction" in query or "predict next month" in query:
+        """For the prediction part"""
         return "visitor_prediction"
     else:
         return None  # no KB for general question
@@ -77,7 +78,6 @@ def retrieve_context(query, top_k):
     return "\n".join(kb_facts[kb_name][i] for i in I[0])
 def is_domain_question(query, threshold):
     vec = embedder.encode([query])[0]
-    from pyspark.ml.linalg import Vectors
     spark_row = spark.createDataFrame([Row(features=Vectors.dense(vec))])
     pred = model_re.transform(spark_row).collect()[0]
     return pred['probability'][1] > threshold

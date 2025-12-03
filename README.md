@@ -238,12 +238,21 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 ## Files Flow Structure
 
 1- **setup_env.py**: Set up environment, install PySpark and Hadoop on WSL.  
+
 2- **init.sh**: Create Python environment, install needed Python dependencies, and run the scripts.  
+
 3- **pipeline_01_data_process.py**: Process the big data by converting to lowercase, removing unwanted symbols, removing duplicates, and saving it as Parquet.  
+
 4- **data_analysis.py**: Functions used for Loading Parquet files and answer the 5 scenarios questions.
+
 5- **pipeline_02_faiss.py**: Create the knowledge bases for each dataset and for the 5 scenarios.
+
 6- **knowledge_evaluate.py**: Evaluate the knowledge bases. 
+
 7- **pipeline_03_create_model.py**: Create the visitor prediction model.  
+
 8- **pipeline_04_qlora.py**: Adjust the model to be domain-specific.  
+
 9- **pipeline_05_domain_classifier.py**: Create a query classification model.  
-11- **chat.py**: The chat AI.  
+
+10- **chat.py**: The chat AI.  

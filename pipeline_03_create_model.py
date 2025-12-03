@@ -10,7 +10,6 @@ import numpy as np
 # ------------------ Start Spark ------------------
 spark = SparkSession.builder.appName("HospitalNext6MonthsPrediction_Fixed").getOrCreate()
 base = "data/curated_parquet"
-
 # ------------------ Load dataset ------------------
 appts_c = spark.read.parquet(f"{base}/appointments.parquet")
 
@@ -73,11 +72,66 @@ pred_array = np.array(pred_array)
 
 r2 = 1 - np.sum((test_array - pred_array)**2) / np.sum((test_array - np.mean(test_array))**2)
 rmse = np.sqrt(np.mean((test_array - pred_array)**2))
+# Mean Absolute Error (MAE)
+mae = np.mean(np.abs(test_array - pred_array))
 
-print(":) Next 6 months prediction evaluation (fixed & safe):")
+# Mean Absolute Percentage Error (MAPE)
+# Handle zero values in actuals to avoid division by zero
+mask = test_array != 0
+mape = np.mean(np.abs((test_array[mask] - pred_array[mask]) / test_array[mask])) * 100 if np.any(mask) else None
+
+# Relative Error (RMSE as % of mean)
+mean_actual = np.mean(test_array)
+rmse_relative = (rmse / mean_actual) * 100 if mean_actual != 0 else None
+
+# Standard Deviation of actuals
+std_actual = np.std(test_array)
+print(":) Next 6 months prediction evaluation:")
 print(f"Predictions: {pred_array}")
 print(f"Actual:      {test_array}")
-print(f"R²:          {r2:.2f}")
-print(f"RMSE:        {rmse:.2f}")
+# print(f"R²:          {r2:.2f}")
+# print(f"RMSE:        {rmse:.2f}")
+print("-" * 50)
+print(f"R²:          {r2:.4f} ({r2*100:.1f}% variance explained)")
+print(f"RMSE:        {rmse:.2f} patients")
+print(f"MAE:         {mae:.2f} patients")
+if mape is not None:
+    print(f"MAPE:        {mape:.2f}%")
+if rmse_relative is not None:
+    print(f"Rel. Error:  {rmse_relative:.2f}% (RMSE/Mean)")
+print("-" * 50)
+print(f"Statistics of Actual Values:")
+print(f"  Mean:      {mean_actual:.2f} patients")
+print(f"  Std Dev:   {std_actual:.2f} patients")
+print(f"  Range:     [{np.min(test_array):.0f}, {np.max(test_array):.0f}] patients")
+print("-" * 50)
 
+# ------------------ Quality Assessment ------------------
+if r2 >= 0.9:
+    r2_quality = "EXCELLENT"
+elif r2 >= 0.7:
+    r2_quality = "GOOD"
+elif r2 >= 0.5:
+    r2_quality = "FAIR"
+else:
+    r2_quality = "POOR"
+
+if rmse_relative is not None:
+    if rmse_relative < 10:
+        rmse_quality = "EXCELLENT"
+    elif rmse_relative < 20:
+        rmse_quality = "GOOD"
+    elif rmse_relative < 30:
+        rmse_quality = "FAIR"
+    else:
+        rmse_quality = "POOR"
+else:
+    rmse_quality = "Cannot assess (mean is zero)"
+
+print(f"Model Quality Assessment:")
+print(f"  R²: {r2_quality}")
+if rmse_quality != "Cannot assess (mean is zero)":
+    print(f"  Relative Error: {rmse_quality}")
+else:
+    print(f"  Absolute Error: RMSE = {rmse:.0f} patients")
 spark.stop()

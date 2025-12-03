@@ -259,3 +259,9 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 9- **pipeline_05_domain_classifier.py**: Create a query classification model.  
 
 10- **chat.py**: The chat AI.  
+
+11- **data/data_csv**: csv data folder
+
+12- **data/curated_parquet**: parquet data folder
+
+13- **data/output** : has all the models been build by the scripts (kb= knowledge bases, lr_model= logisticregressionmodel , vistor_predict_model, glora model )

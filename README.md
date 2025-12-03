@@ -150,10 +150,10 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Article link: https://journalofbigdata.springeropen.com/articles/10.1186/s40537-025-01207-5
 
 
-## Connection to Current project
+## Connection To Current Project
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements.
 
-## The datasets that has been used is
+## The Datasets That Have Been Used
 1. https://www.kaggle.com/datasets/kanakbaghel/hospital-management-dataset
 2. https://huggingface.co/datasets/mile22/hospital_record_csv
 3. https://github.com/abachaa/MTS-Dialog
@@ -171,7 +171,7 @@ Before the rise of machine learning, earlier models struggled to understand the 
 - Parquet: efficient storage format.
 - FAISS: semantic knowledge retrieval.
 - QLoRA: lightweight LLM fine-tuning
-# Suggestions for future work
+# Suggestions For Future Work
 - Real-time visitor prediction with streaming data.
 - Expand knowledge base across multiple hospital domains.
 - Improve LLM interpretability and prediction accuracy.
@@ -181,7 +181,7 @@ Before the rise of machine learning, earlier models struggled to understand the 
 ## Methodology 
 ![img](imgs/meth.png)
 
-## Questions that used for data analysis:-
+## Questions That Used For Data Analysis:-
 A — Which gender goes to the hospital more?
 
 B — Which hospital branch has the most experienced doctors?

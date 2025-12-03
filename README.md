@@ -232,6 +232,8 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 ![result4](imgs/result4.png)
 - Two datasets were used (MTS-Dialog and Persona-Chat). Therefore, user input can be classified as personal chat or domain-specific chat. When the user input classified as  domain-specific the model generates the appropriate context by retrieving relevant informations from the knowledge bases.
 
+### A Chat-Based Then Been Developed
+
 ## Project Setup Environment
 
 - Ubuntu 22.04 with NVIDIA CUDA on WSL

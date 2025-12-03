@@ -175,14 +175,18 @@ Before the rise of machine learning, earlier models struggled to understand the 
 - Utilize a catalog to enhance multimodal data organization by leveraging Neuralink’s data repository, which provides a unified and scalable way to structure, access, and manage diverse data types efficiently.
 
 
-## Methods 
+## Methodology 
 ![img](imgs/meth.png)
 
 ## Questions that used for data analyzing:-
 A — Which gender goes to the hospital more?
+
 B — Which hospital branch has the most experienced doctors?
+
 C — Which specialization dominates the others?
+
 D — What is the most common reason for visits?
+
 E — What is the ranking of treatments by cost?
 
 Then with the help of RandomForestRegressor algorithm, we predict the expected number of visitors for the next month to help the healthcare management system prepare and allocate resources efficiently.

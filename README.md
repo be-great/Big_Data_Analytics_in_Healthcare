@@ -7,14 +7,22 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 
 ## Literature research
+### Most studies follow a similar sequence when applying Apache Spark to healthcare analytics:
+
+1. **Data Collection:** Acquire datasets from hospital records, EHRs, IoT sensors, or clinical databases.  
+2. **Data Preprocessing:** Clean data, handle missing values, normalize or encode features, and remove inconsistencies.  
+3. **Feature Engineering / Selection:** Extract relevant features.  
+4. **Modeling:** Train predictive or classification models using Spark MLlib or deep learning frameworks (e.g., Random Forest, Gradient Boosting, TCN).  
+5. **Evaluation:** Validate models using metrics like Accuracy, AUC, RMSE, MAE, and/or real-time performance.  
 
 ### 1. Predictors of Outpatients’ No-show: Big Data Analytics using Apache Spark (2020)
 *The study aims to identify key predictors of outpatient appointment no-shows using large-scale data analytics with Apache Spark.*
 
-### Methods
-- Large-scale analysis of 2,011,813 outpatient appointments.  
-- Predictive variables capturing behavioral, temporal, and operational characteristics.  
-- Applied Spark MLlib classifiers: Random Forest, Gradient Boosting, Logistic Regression, SVM, and MLP.  
+### Method
+- **Data Collection:** 2M+ outpatient appointments from hospital EMRs.  
+- **Preprocessing:** Cleaned records, encoded categorical variables, normalized numerical features.  
+- **Feature Engineering / Selection:** Behavioral (prior no-shows), temporal (lead-time, month), operational (department, clinic); top features ranked using information gain.  
+- **Modeling:** Random Forest, Gradient Boosting, Logistic Regression, SVM, MLP (Spark MLlib).
 
 ### Technologies
 - Apache Spark (parallel processing).  
@@ -37,10 +45,11 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### 2. Applying Apache Spark on Streaming Big Data for Health Status Prediction
 *The work aims to build a real-time health-status prediction framework that processes streaming IoT data efficiently using Apache Spark.*
 
-### Methods
-- Real-time health-status prediction using Spark Streaming.
-- Feature extraction from sensor streams and historical records.
-- Machine-learning classification for health risk prediction.
+### Method
+- **Data Collection:** Streaming IoT sensors + historical patient records.  
+- **Preprocessing:** Feature extraction from both historical and streaming data; handling missing or noisy sensor data.  
+- **Feature Engineering / Selection:** Relevant physiological and contextual indicators extracted in real-time.  
+- **Modeling:** ML classifiers on Spark Streaming pipeline for health risk prediction.  
 
 ### Technologies
 - Apache Spark (streaming + batch processing).
@@ -63,9 +72,11 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### 3. Apache Spark for Analysis of Electronic Health Records: A Case Study of Diabetes Management
 *The study aims to demonstrate how Apache Spark can enhance large-scale EHR analytics for improving diabetes prediction and management.*
 
-### Methods
-- Real EHR datasets processed with Apache Spark.  
-- Data preprocessing, feature extraction, and ML model training.  
+### Method
+- **Data Collection:** Large-scale EHR datasets across multiple hospitals.  
+- **Preprocessing:** Data cleaning, handling missing or inconsistent entries, normalization.  
+- **Feature Engineering / Selection:** Extracted clinical and demographic features relevant for diabetes prediction.  
+- **Modeling:** ML models (Spark MLlib) for scalable predictive analytics.  
 
 ### Technologies
 - Apache Spark (distributed + in-memory processing).  
@@ -86,9 +97,11 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### 4. Apache Spark in Healthcare: Advancing Data-Driven Innovations and Better Patient Care
 *The goal is to review how Apache Spark enables scalable, data-driven analytics to improve healthcare operations and patient outcomes.*
 
-### Methods
-- Case studies covering EHR management, predictive analytics, remote monitoring, and personalized medicine.  
-- Spark-based pipelines for data preprocessing and ML/AI analysis.  
+### Method
+- **Data Collection:** Multiple healthcare datasets including EHR, imaging, and remote monitoring.  
+- **Preprocessing:** Standardized data pipelines for batch and streaming analyses.  
+- **Feature Engineering / Selection:** Case-dependent feature extraction for predictive analytics and personalized medicine.  
+- **Modeling:** ML/AI frameworks integrated with Spark; multiple applications explored.
 
 ### Technologies
 - Apache Spark (batch + streaming).  
@@ -111,10 +124,11 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### 5. Cloud-based Real-time SBP & HR Prediction using TCN and Apache Spark (2025)
 *The research aims to build a real-time cloud-based framework for predicting systolic blood pressure and heart rate using Spark streaming and deep learning.*
 
-### Methods
-- Real-time SBP and HR prediction from streaming physiological data.  
-- Multi-task Temporal Convolutional Network (TCN) compared with single-task models.  
-- Data pipeline implemented with Apache Spark and Kafka.  
+### Method
+- **Data Collection:** Streaming physiological data from MIMIC-III dataset.  
+- **Preprocessing:** Sliding-window time-series creation; normalization; handling missing data.  
+- **Feature Engineering / Selection:** Multi-task targets: SBP and HR; time-lagged features.  
+- **Modeling:** Multi-task Temporal Convolutional Network (TCN); real-time Spark + Kafka pipeline.
 
 ### Technologies
 - Temporal Convolutional Network (TCN).  

@@ -171,8 +171,8 @@ Before the rise of machine learning, earlier models struggled to understand the 
 - Parquet: efficient storage format.
 - FAISS: semantic knowledge retrieval.
 - QLoRA: lightweight LLM fine-tuning
+
 # Suggestions For Future Work
-- Real-time visitor prediction with streaming data.
 - Expand knowledge base across multiple hospital domains.
 - Improve LLM interpretability and prediction accuracy.
 - Utilize a catalog to enhance multimodal data organization by leveraging Neuralink’s data repository, which provides a unified and scalable way to structure, access, and manage diverse data types efficiently.

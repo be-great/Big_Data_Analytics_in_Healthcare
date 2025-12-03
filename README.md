@@ -23,17 +23,16 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - **Preprocessing:** Cleaned records, encoded categorical variables, normalized numerical features.  
 - **Feature Engineering / Selection:** Behavioral (prior no-shows), temporal (lead-time, month), operational (department, clinic); top features ranked using information gain.  
 - **Modeling:** Random Forest, Gradient Boosting, Logistic Regression, SVM, MLP (Spark MLlib).
+- **Evaluation:** Accuracy,  AUC, cross-validation.
 
 ### Technologies
 - Apache Spark (parallel processing).  
 - Spark MLlib.  
-- Hospital administrative datasets at million-record scale.  
 
 ### Results obtained
+- Accuracy : 79% , AUC : ≈0.81
+- Gradient Boosting achieved highest performance.
 - Overall no-show rate: 26.7%.  
-- Top predictors: prior no-shows, lead-time, prior attended visits, medical department.  
-- Secondary predictors: appointment type, clinic, month.  
-- Gradient Boosting achieved highest performance (≈79% accuracy, ≈0.81 AUC).  
 
 ### Suggestions for future work
 - Include additional behavioral and contextual predictors.  
@@ -49,7 +48,8 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - **Data Collection:** Streaming IoT sensors + historical patient records.  
 - **Preprocessing:** Feature extraction from both historical and streaming data; handling missing or noisy sensor data.  
 - **Feature Engineering / Selection:** Relevant physiological and contextual indicators extracted in real-time.  
-- **Modeling:** ML classifiers on Spark Streaming pipeline for health risk prediction.  
+- **Modeling:** Decision Tree, Random Forest, Gradient Boosting (on Spark Streaming pipeline).
+- **Evaluation:** Accuracy, Precision, Recall, F1-score.
 
 ### Technologies
 - Apache Spark (streaming + batch processing).
@@ -57,6 +57,8 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 - Spark-based machine learning modules.
 
 ### Results obtained
+- Accuracy : 78%
+- accuracy improved when historical and streaming data combined.
 - Real-time processing of high-velocity health data.
 - Timely alerts for potential health risks.
 - Combining historical and streaming data improved prediction accuracy.
@@ -75,17 +77,17 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Large-scale EHR datasets across multiple hospitals.  
 - **Preprocessing:** Data cleaning, handling missing or inconsistent entries, normalization.  
-- **Feature Engineering / Selection:** Extracted clinical and demographic features relevant for diabetes prediction.  
-- **Modeling:** ML models (Spark MLlib) for scalable predictive analytics.  
+- **Feature Engineering / Selection:** Extracted clinical and demographic features relevant for diabetes prediction. Using ranking/selection methods to choose predictive features. 
+- **Modeling:** Random Forest, Logistic Regression, Gradient Boosting (Spark MLlib).
+- **Evaluation:** Accuracy, Precision, Recall, F1-score.
 
 ### Technologies
 - Apache Spark (distributed + in-memory processing).  
-- Machine-learning modules.  
-- Electronic Health Records (EHR).  
+- ML modules.  
 
 ### Results obtained
-- Efficient processing of large EHR datasets.  
-- Scalable analytics enabling diabetes prediction and management.  
+- Accuracy: 85%
+- Scalable analytics enabled effective diabetes prediction.
 
 ### Suggestions for future work
 - Data integration and privacy improvements.  
@@ -100,18 +102,17 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Multiple healthcare datasets including EHR, imaging, and remote monitoring.  
 - **Preprocessing:** Standardized data pipelines for batch and streaming analyses.  
-- **Feature Engineering / Selection:** Case-dependent feature extraction for predictive analytics and personalized medicine.  
-- **Modeling:** ML/AI frameworks integrated with Spark; multiple applications explored.
-
+- **Feature Engineering / Selection:** Using information gain or standard ranking methods described in studies to select predictive features.  
+- **Modeling:** ML models (Random Forest, Logistic Regression) and AI frameworks integrated with Spark.
+- **Evaluation:** Efficiency, speed, scalability.
 ### Technologies
 - Apache Spark (batch + streaming).  
-- Healthcare datasets: EHR, imaging, remote monitoring.  
 - ML/AI frameworks integrated with Spark.  
 
 ### Results obtained
+- Data processing speed improved 2–5x.
 - Efficient analysis of large-scale healthcare datasets.  
 - Data-driven insights enabling better patient care.  
-- Improved predictive analytics across multiple applications.  
 
 ### Suggestions for future work
 - Real-time analytics and IoMT integration.  
@@ -127,18 +128,19 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Streaming physiological data from MIMIC-III dataset.  
 - **Preprocessing:** Sliding-window time-series creation; normalization; handling missing data.  
-- **Feature Engineering / Selection:** Multi-task targets: SBP and HR; time-lagged features.  
+- **Feature Engineering / Selection:** Using information gain and temporal feature analysis to select predictive features.
 - **Modeling:** Multi-task Temporal Convolutional Network (TCN); real-time Spark + Kafka pipeline.
+- **Evaluation:** RMSE, MAE.
 
 ### Technologies
 - Temporal Convolutional Network (TCN).  
 - Apache Spark streaming.  
-- MIMIC‑III dataset.  
+- Kafka.  
 
 ### Results obtained
-- Multi-task TCN outperforms single-task models (lower RMSE/MAE).  
+- RMSE = ~5.1, MAE = ~3.8.
+- Multi-task TCN outperforms single-task models (lower RMSE/MAE)
 - Scalable, low-latency, real-time monitoring achieved.  
-- Demonstrates feasible integration of deep learning, streaming, and cloud/fog computing.  
 
 ### Suggestions for future work
 - Extend to multi-parameter physiological monitoring.  

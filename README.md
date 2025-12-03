@@ -154,9 +154,10 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements.
 
 ## The datasets that has been used is
-1. https://huggingface.co/datasets/mile22/hospital_record_csv
-2. https://github.com/abachaa/MTS-Dialog
-3. https://huggingface.co/datasets/awsaf49/persona-chat
+1. https://www.kaggle.com/datasets/kanakbaghel/hospital-management-dataset
+2. https://huggingface.co/datasets/mile22/hospital_record_csv
+3. https://github.com/abachaa/MTS-Dialog
+4. https://huggingface.co/datasets/awsaf49/persona-chat
 
 ##  Motivations
 Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.

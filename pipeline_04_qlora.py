@@ -45,7 +45,7 @@ def load_model():
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    # Optional: load in 4-bit for GPU memory saving
+    # load in 4-bit for GPU memory saving
     from transformers import BitsAndBytesConfig
     bnb = BitsAndBytesConfig(
         load_in_4bit=True,

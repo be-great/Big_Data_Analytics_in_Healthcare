@@ -180,7 +180,7 @@ Before the rise of machine learning, earlier models struggled to understand the 
 ## Methodology 
 ![img](imgs/meth.png)
 
-## Questions that used for data analyzing:-
+## Questions that used for data analysis:-
 A — Which gender goes to the hospital more?
 
 B — Which hospital branch has the most experienced doctors?

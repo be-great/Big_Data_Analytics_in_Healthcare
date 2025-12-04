@@ -8,24 +8,25 @@ import os
 from pyspark.sql import SparkSession
 from datasets import Dataset
 
+base_file = ""
+BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+output_folder = "data/output/glora"
+ADAPTER_PATH = os.path.join(base_file, "data/output/glora")  # Using os.path.join
+KB_PATHS = {
+    "doctors": os.path.join(base_file, "data/output/kb/doctors"),
+    "patients": os.path.join(base_file, "data/output/kb/patients"),
+    "appointments": os.path.join(base_file, "data/output/kb/appointments"),
+    "treatments": os.path.join(base_file, "data/output/kb/treatments"),
+    "billing": os.path.join(base_file, "data/output/kb/billing"),
+    "gender_comparison": os.path.join(base_file, "data/output/kb/gender_comparison"),
+    "expensive_treatment": os.path.join(base_file, "data/output/kb/expensive_treatment"),
+    "top_reasons_for_visits": os.path.join(base_file, "data/output/kb/top_reasons_for_visits"),
+    "top_specializations": os.path.join(base_file, "data/output/kb/top_specializations"),
+    "hospital_experience": os.path.join(base_file, "data/output/kb/hospital_experience"), # Added missing KB path
+}
+
 def load_model():
-    base_file = ""
     # ====== CONFIG ======
-    BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-    output_folder = "data/output/glora"
-    ADAPTER_PATH = os.path.join(base_file, "data/output/adapters")  # Using os.path.join
-    KB_PATHS = {
-        "doctors": os.path.join(base_file, "data/output/kb/doctors"),
-        "patients": os.path.join(base_file, "data/output/kb/patients"),
-        "appointments": os.path.join(base_file, "data/output/kb/appointments"),
-        "treatments": os.path.join(base_file, "data/output/kb/treatments"),
-        "billing": os.path.join(base_file, "data/output/kb/billing"),
-        "gender_comparison": os.path.join(base_file, "data/output/kb/gender_comparison"),
-        "expensive_treatment": os.path.join(base_file, "data/output/kb/expensive_treatment"),
-        "top_reasons_for_visits": os.path.join(base_file, "data/output/kb/top_reasons_for_visits"),
-        "top_specializations": os.path.join(base_file, "data/output/kb/top_specializations"),
-        "hospital_experience": os.path.join(base_file, "data/output/kb/hospital_experience"), # Added missing KB path
-    }
     TOP_K = 3
     # ====== DEVICE ======
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -44,6 +45,23 @@ def load_model():
     embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device=device)
 
 
+    # ====== LOAD BASE + LoRA MODEL ON GPU ======
+    tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    base_model = AutoModelForCausalLM.from_pretrained(
+    BASE_MODEL,
+    torch_dtype=torch.float32,
+    device_map={"": "cpu"}  # Force CPU
+    )
+
+    model = PeftModel.from_pretrained(base_model, ADAPTER_PATH)
+    model.eval()
+
+    
+    return model, kb_indexes, kb_facts, embedder, tokenizer
+def create_glora_model():
     # 1″ Load small dataset from Parquet
     spark = SparkSession.builder.appName("MakeSFTDataCPU").getOrCreate()
     #create_lightweight_training_examples
@@ -149,4 +167,6 @@ def load_model():
     model.save_pretrained(output_folder)
     tokenizer.save_pretrained(output_folder)
     print(" +++ LoRA adapter saved to:", output_folder)
-    return model, kb_indexes, kb_facts, embedder, tokenizer
+
+"""uncomment if you want to create the glora model"""
+# create_glora_model() 

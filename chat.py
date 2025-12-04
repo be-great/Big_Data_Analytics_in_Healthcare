@@ -1,16 +1,17 @@
 from pyspark.sql import SparkSession, Row
 from pyspark.ml.classification import LogisticRegressionModel
 from pipeline_04_qlora import load_model
-from pyspark.ml.regression import RandomForestRegressor
+from pyspark.ml.regression import RandomForestRegressionModel
 from pyspark.ml.linalg import Vectors
 from pyspark.sql.functions import trunc, countDistinct
 
-visitor_model = RandomForestRegressor.load("data/output/visitor_predict_model")
-model_re =  LogisticRegressionModel.load("data/output/lr_model")
-model , kb_indexes, kb_facts, embedder, tokenizer = load_model()
 spark = SparkSession.builder \
     .appName("DomainQuestionChecker") \
     .getOrCreate()
+visitor_model = RandomForestRegressionModel.load("data/output/visitor_predict_model")
+model_re =  LogisticRegressionModel.load("data/output/lr_model")
+model , kb_indexes, kb_facts, embedder, tokenizer = load_model()
+
 def get_kb_name(query):
     query = query.lower()
     if any(word in query for word in ["doctor", "specialization", "years experience"]):

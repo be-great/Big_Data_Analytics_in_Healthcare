@@ -1,3 +1,37 @@
+# -----------------------
+# Design Summary
+# Purpose: Interactive domain-aware QA system that uses Spark, ML models,
+#          and a LoRA-adapted LLM to answer hospital-related queries.
+
+# Components:
+#   • SparkSession for loading Parquet data and computing analytics.
+#   • RandomForestRegressionModel for visitor-count prediction.
+#   • LogisticRegressionModel for domain-question detection.
+#   • LoRA adapted LLM (model), FAISS knowledge indexes, knowledge facts,
+#     embedding model, and tokenizer loaded via load_model().
+#   • Knowledge-base selector for routing queries to the correct dataset.
+#   • Context retriever for fetching top-k relevant facts.
+#   • Domain classifier to decide whether to attach context or not.
+#   • Chat loop for receiving queries, building prompts, generating answers.
+
+# Functions:
+#   • get_kb_name(query)
+#   • retrieve_context(query, top_k)
+#   • is_domain_question(query, threshold)
+#
+# Flow:
+#   1) Start Spark session.
+#   2) Load ML models and LLM + embeddings + FAISS indexes.
+#   3) Determine the correct knowledge base for each query.
+#   4) If domain-specific:
+#        - Retrieve relevant facts or perform visitor prediction.
+#        - Build prompt including context.
+#      Else:
+#        - Build prompt without context.
+#   5) Use tokenizer + LLM to generate an answer.
+#   6) Clean output to remove prompt echoes and extra generations.
+#   7) Repeat until user exits.
+# -----------------------
 from pyspark.sql import SparkSession, Row
 from pyspark.ml.classification import LogisticRegressionModel
 from pipeline_04_qlora import load_model
@@ -31,6 +65,11 @@ model, kb_indexes, kb_facts, embedder, tokenizer = load_model()
 # =========================
 # Knowledge base selection
 # =========================
+""""
+get_kb_name: function that selects the knowledge-base based on keywords in the query
+query : the input text to analyze
+return : the selected KB name or None
+"""
 def get_kb_name(query):
     query = query.lower()
     
@@ -67,6 +106,12 @@ def get_kb_name(query):
 # =========================
 # Retrieve context from KB
 # =========================
+"""
+retrieve_context: function that retrieves top-k relevant facts or runs visitor prediction
+query : the user question
+top_k : number of facts to return
+return : retrieved facts as text (or prediction result)
+"""
 def retrieve_context(query, top_k):
     """
     Retrieves top-k relevant facts for a query from the appropriate KB.
@@ -106,6 +151,12 @@ def retrieve_context(query, top_k):
 # =========================
 # Check if query is domain-specific
 # =========================
+"""
+is_domain_question: function that checks if the query belongs to the hospital domain
+query : the input question
+threshold : probability cutoff for classification
+return : boolean value indicating domain relevance
+"""
 def is_domain_question(query, threshold=0.5):
     vec = embedder.encode([query])[0]
     spark_row = spark.createDataFrame([Row(features=Vectors.dense(vec))])

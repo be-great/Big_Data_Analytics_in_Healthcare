@@ -266,3 +266,6 @@ To demonstrate the integration of the domain-specific models, we combined them i
 12- **data/curated_parquet**: parquet data folder
 
 13- **data/output** : has all the models been build by the scripts (kb= knowledge bases, lr_model= logisticregressionmodel , vistor_predict_model, glora model )
+
+
+Repository link : https://github.com/be-great/Big_Data_Analytics_in_Healthcare/

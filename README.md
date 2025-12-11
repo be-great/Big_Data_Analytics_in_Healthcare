@@ -1,10 +1,11 @@
 # Designing Localized Lightweight LLMs for Domain-Specific Applications
-This project develops a lightweight, domain-specific AI system that integrates hospital visitor prediction, knowledge-base creation, and interactive querying to support efficient data-driven decision-making.
-### introduction
+## Project Summary
+
+This project focuses on big-data analytics in the healthcare domain using Apache Spark. The goal is to analyze large hospital datasets, answer five data-analysis scenarios, and build a prediction model for next-month visitors. The data is processed and stored using Parquet for faster loading. FAISS is used to create knowledge bases for fast semantic retrieval. A lightweight domain-specific LLM is then developed using QLoRA, and a logistic regression classifier separates domain and non-domain user inputs. Finally, all components are integrated into a simple chat system that shows how the models work together. This setup supports efficient data processing, knowledge retrieval, and domain-aware interaction in a healthcare setting
+
+## introduction
 
 As large language models (LLMs) continue to be adopted across a range of real-world applications, several ongoing challenges have become more noticeable, particularly those concerning scalability, data privacy, and computational cost. While high-end models such as GPT-4 and LLaMA-3 are known for their strong general performance, they often face difficulties when applied to focused domains or environments with limited computing resources. Our evaluation shows that LLMs can perform on par with considerably larger systems, yet offer advantages in inference speed, storage use, and the protection of sensitive information. Taken together, these results present a grounded pathway for developing compact and privacy-aware language models that can operate effectively.
-
-
 
 ## Literature research
 ### Most studies follow a similar sequence when applying Apache Spark to healthcare analytics:

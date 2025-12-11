@@ -159,9 +159,9 @@ Before the rise of machine learning, earlier models struggled to understand the 
 Recent work on BLoRA and quantized adapters shows that memory-efficient fine-tuning can still keep strong accuracy by balancing adapter dimensions and aligning with block-wise quantization. These methods make lightweight clinical models more practical for hospital analytics and scalable medical NLP. [1] Studies on FAISS highlight its ability to handle million-scale vectors using flat, HNSW, IVF, and PQ-based indexes.[2] Work combining FAISS with a T5 model for radiology summarization showed that retrieval improves semantic and clinical consistency but with the limitation of some factual issues. This makes FAISS suitable for fast retrieval over large clinical embeddings and similarity-based healthcare applications  [3] Research comparing Parquet, ORC, and Arrow showed that Parquet gives the best compression, ORC excels in selective queries, and Arrow provides fast in-memory access. [4]
 
 #### Ref: 
-1. https://doi.org/10.32604/cmc.2024.057491,
-2. https://doi.org/10.1109/TBDATA.2025.3618474,
-3. https://doi.org/10.19113/sdufenbed.1739565,
+1. https://doi.org/10.32604/cmc.2024.057491
+2. https://doi.org/10.1109/TBDATA.2025.3618474
+3. https://doi.org/10.19113/sdufenbed.1739565
 4. https://doi.org/10.1007/s00778-025-00911-1
 
 

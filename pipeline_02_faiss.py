@@ -1,3 +1,24 @@
+# -----------------------
+# Purpose: build FAISS knowledge bases from hospital datasets and analysis results.
+#
+# Objects:
+#   - SparkSession: used to load and process DataFrames.
+#   - Input Parquet tables: patients, doctors, appointments, treatments, billing.
+#   - SentenceTransformer model: converts text into embeddings.
+#   - build_kb(df, name, text_func): creates FAISS index from DataFrame and saves texts/index.
+#   - FAISS index: stores embeddings for fast similarity search.
+#   - Analysis functions: gender_distribution, most_experienced_branch, top_specialization, common_visit_reason, treatments_by_cost.
+#
+# Flow:
+#   1) Start Spark session.
+#   2) Load parquet datasets and analysis results.
+#   3) Initialize SentenceTransformer model.
+#   4) Build FAISS knowledge bases for each dataset.
+#   5) Build FAISS knowledge bases for analysis insights.
+#   6) Save FAISS indices and corresponding texts to output folder.
+#   7) Stop Spark session.
+# -----------------------
+
 import argparse, os
 import numpy as np
 import torch, faiss
@@ -23,10 +44,14 @@ exp_tre = treatments_by_cost(billing, treats)
 # Load SentenceTransformer model
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2", device=device)
-"""Function to build a knowledge base"""
-# turns each DataFrame row into a text
-# sentence and creates a corresponding
-# unique ID list. Example : patient Ali Bob
+"""
+build_kb: function that creates a FAISS knowledge base from a Spark DataFrame
+df: input Spark DataFrame
+name: output knowledge base name
+text_func: function converting DataFrame row into text string
+return: None
+Short: encodes rows, builds FAISS index, saves index and texts
+"""
 def build_kb(df, name, text_func):
     rows = df.collect()
     texts, ids = [], []

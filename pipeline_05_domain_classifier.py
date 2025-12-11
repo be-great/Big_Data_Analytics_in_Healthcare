@@ -1,3 +1,27 @@
+# -----------------------
+# Purpose: train a domain classifier to distinguish between domain-specific (medical) and non-domain dialogues.
+#
+# Objects:
+#   - SparkSession: used to process embeddings as Spark DataFrames for ML.
+#   - Domain dataset: medical dialogues loaded from CSV.
+#   - Non-domain dataset: general dialogues loaded from persona-chat dataset.
+#   - SentenceTransformer: converts text messages into numerical embeddings.
+#   - LogisticRegression: Spark ML model for binary classification.
+#   - Evaluation metrics: accuracy, precision, recall, F1 score, confusion matrix.
+#
+# Flow:
+#   1) Load domain-specific dataset and split dialogues into turns.
+#   2) Load non-domain dataset and extract conversation turns.
+#   3) Label domain (1) and non-domain (0) messages.
+#   4) Split into train/test sets.
+#   5) Encode sentences using SentenceTransformer.
+#   6) Convert embeddings and labels into Spark DataFrames.
+#   7) Train Logistic Regression classifier.
+#   8) Predict on test set.
+#   9) Evaluate model using accuracy, precision, recall, F1, and confusion matrix.
+#   10) Save trained model.
+# -----------------------
+
 from datasets import load_dataset
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -13,6 +37,11 @@ import re
 
 KEEP_PREFIX = False # remove prefix like "speaker:" in the dataset
 # Function to extract only real conversation turns
+"""
+extract_conversations: function that extracts conversation turns from persona-chat dataset
+example: dictionary containing key "text" with raw dialogue
+return: dictionary with key "turns" containing cleaned conversation turns
+"""
 def extract_conversations(example):
     text = example['text']
     # Split by both '|' and '\t'
@@ -27,6 +56,12 @@ def extract_conversations(example):
     return {'turns': turns}
 
 # Function to split dialogue into turns in domain dataset
+"""
+split_turns: function that splits a dialogue string into individual speaker turns
+dialogue: raw dialogue string containing "Doctor:" and "Patient:" labels
+keep_prefix: bool, whether to retain speaker labels in the output (default = False)
+return: list of cleaned dialogue turns
+"""
 def split_turns(dialogue, keep_prefix=KEEP_PREFIX):
     # Split on "Doctor:" or "Patient:"
     turns = re.split(r'(Doctor:|Patient:)', dialogue)
@@ -41,6 +76,10 @@ def split_turns(dialogue, keep_prefix=KEEP_PREFIX):
             clean_turns.append(text)
     return clean_turns
 
+"""
+non_domain_dataset_prepear: function that loads and cleans non-domain persona-chat dataset
+return: list of text messages (non-domain)
+"""
 def non_domain_dataset_prepear():
     # Load dataset
     dataset = load_dataset("awsaf49/persona-chat", split="train")
@@ -54,7 +93,10 @@ def non_domain_dataset_prepear():
     print("Total cleaned messages:", len(all_messages))
     non_domain_messages = all_messages[:3088]
     return non_domain_messages
-
+"""
+domain_dataset_prepear: function that loads and cleans domain-specific dataset
+return: list of text messages (domain)
+"""
 def domain_dataset_prepear():
     file_path = "data/data_csv/MTS-Dialog-Automatic-Summaries-ValidationSet.csv"
     try:
@@ -80,6 +122,11 @@ def domain_dataset_prepear():
         # Optional: save to CSV
         # pd.DataFrame({"message": domain_messages}).to_csv("domain_messages_flat.csv", index=False)
         return domain_messages
+
+"""
+regression_model_creation: function that trains a domain classifier
+return: None (saves trained Logistic Regression model)
+"""
 def regression_model_creation():
     domain_messages = domain_dataset_prepear()
     non_domain_messages = non_domain_dataset_prepear()

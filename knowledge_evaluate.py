@@ -1,3 +1,22 @@
+# -----------------------
+# Purpose: evaluate knowledge base (KB) retrieval performance using FAISS embeddings.
+#
+# Objects:
+#   - SentenceTransformer: converts text queries to embeddings.
+#   - FAISS indexes: vector indexes of KB facts for retrieval.
+#   - Pandas DataFrames: KB facts loaded from Parquet files.
+#   - Metrics: precision@k, recall@k, MRR, nDCG@k, top-k distances, Cohen's d, separability, AUC.
+#   - KBs: regular KBs (patients, doctors, appointments, treatments, billing) and analytic KBs (derived statistics).
+#
+# Flow:
+#   1) Load each KB (Parquet + FAISS index + facts).
+#   2) Generate queries for in-KB evaluation.
+#   3) Compute retrieval metrics (precision@k, recall@k, MRR, nDCG@k) for in-KB queries.
+#   4) Generate out-of-KB queries and check abstention behavior.
+#   5) Evaluate analytic KBs (without Parquet files) using distances, Cohen's d, separability, AUC.
+#   6) Aggregate results and return metrics/dataframes.
+# -----------------------
+
 import pandas as pd
 import numpy as np
 import os
@@ -25,6 +44,11 @@ ANALYTIC_KBS = ["gender_comparison","hospital_experience","top_specializations",
 # -------------------------
 # LOAD KB
 # -------------------------
+"""
+load_kb: function that loads a knowledge base
+name: name of the KB (e.g., "patients", "doctors")
+return: Pandas DataFrame of KB facts
+"""
 def load_kb(name):
     KB_INDEXES[name] = faiss.read_index(BASE_KB + f"{name}.index")
     KB_TEXTS[name] = np.load(BASE_KB + f"{name}_facts.npy", allow_pickle=True)
@@ -37,18 +61,44 @@ def load_kb(name):
 # -------------------------
 # METRICS
 # -------------------------
+"""
+precision_at_k: function that computes precision at k for a single query
+indices: list of retrieved indices
+true_idx: true index of the fact
+k: top-k cutoff
+return: float (0.0 or 1.0)
+"""
 def precision_at_k(indices, true_idx, k):
     return 1.0 if true_idx in indices[:k] else 0.0
 
+"""
+recall_at_k: function that computes recall at k for a single query
+indices: list of retrieved indices
+true_idx: true index of the fact
+k: top-k cutoff
+return: float (0.0 or 1.0)
+"""
 def recall_at_k(indices, true_idx, k):
     return 1.0 if true_idx in indices[:k] else 0.0
 
+"""
+mrr: function that computes mean reciprocal rank for a single query
+indices: list of retrieved indices
+true_idx: true index of the fact
+return: float (reciprocal rank)
+"""
 def mrr(indices, true_idx):
     for rank, idx in enumerate(indices, start=1):
         if idx == true_idx:
             return 1.0 / rank
     return 0.0
-
+"""
+ndcg_at_k: function that computes normalized discounted cumulative gain at k
+indices: list of retrieved indices
+true_idx: true index of the fact
+k: top-k cutoff
+return: float (nDCG score)
+"""
 def ndcg_at_k(indices, true_idx, k):
     if true_idx not in indices[:k]:
         return 0.0
@@ -58,6 +108,12 @@ def ndcg_at_k(indices, true_idx, k):
 # -------------------------
 # GENERATE QUERY
 # -------------------------
+"""
+generate_query: function that creates a textual query for a KB row
+row: Pandas Series representing a KB fact
+name: KB name
+return: string query
+"""
 def generate_query(row, name):
     if name == "patients":
         return f"Patient {row['patient_first_name']} {row['patient_last_name']} with id {row['patient_id']} lives at {row['address']}."
@@ -74,6 +130,11 @@ def generate_query(row, name):
 # -------------------------
 # KB SELECTION (for out-of-KB queries)
 # -------------------------
+"""
+get_kb_name: function that guesses KB name from query text
+query: text query
+return: KB name string or None
+"""
 def get_kb_name(query):
     q = query.lower()
     if any(word in q for word in ["doctor", "specialization", "years experience"]):
@@ -91,6 +152,13 @@ def get_kb_name(query):
 # -------------------------
 # RETRIEVE FROM KB
 # -------------------------
+"""
+retrieve_from_kb: function that retrieves top-k facts from a KB
+query: text query
+kb_name: KB name
+top_k: number of results
+return: list of retrieved texts, list of indices, list of distances
+"""
 def retrieve_from_kb(query, kb_name, top_k=TOP_K):
     q_vec = embedder.encode([query], convert_to_numpy=True).astype("float32")
     D, I = KB_INDEXES[kb_name].search(q_vec, top_k)
@@ -99,6 +167,13 @@ def retrieve_from_kb(query, kb_name, top_k=TOP_K):
 # -------------------------
 # EVALUATION
 # -------------------------
+"""
+evaluate_all_kbs: function that evaluates all regular KBs
+all_kbs: list of KB names
+top_k: top-k retrieval
+num_samples: number of sample queries per KB
+return: dataframe of results, overall in-KB metrics, abstention accuracy for out-of-KB queries
+"""
 def evaluate_all_kbs(all_kbs, top_k=TOP_K, num_samples=NUM_SAMPLES):
     global KB_INDEXES, KB_TEXTS, KB_IDS, KB_DFS
     all_results = []
@@ -185,11 +260,14 @@ def evaluate_all_kbs(all_kbs, top_k=TOP_K, num_samples=NUM_SAMPLES):
     KB_DFS = {}
     return df_all, overall_metrics, abstention_acc
 
+"""
+evaluate_analytic_kbs: function that evaluates analytic KBs (without Parquet)
+ks: list of analytic KB names
+num_noise: number of random noise vectors
+num_rand_text: number of random text queries
+return: dataframe of metrics per analytic KB
+"""
 def evaluate_analytic_kbs(ks, num_noise=200, num_rand_text=100):
-    """
-    Evaluate only KBs that DO NOT have a parquet file (analytic KBs).
-    Returns a pandas DataFrame with metrics per KB.
-    """
     rows = []
     for name in ks:
         parquet_path = BASE_PARQUET + f"{name}.parquet"

@@ -1,3 +1,30 @@
+# -----------------------
+# Purpose: predict the number of unique patient visits for the next 6 months using historical appointment data.
+#
+# Objects:
+#   - SparkSession: used to load and process appointment data.
+#   - appts_c: input Parquet table of appointments.
+#   - monthly_df: aggregated monthly patient counts with lag and seasonal features.
+#   - VectorAssembler: creates feature vector for Random Forest.
+#   - RandomForestRegressor: model for predicting patient counts.
+#   - Teacher forcing: method to prepare test features for prediction.
+#   - Predictions: collect predicted and actual patient counts.
+#   - Evaluation metrics: R², RMSE, MAE, MAPE, relative error, standard deviation.
+#
+# Flow:
+#   1) Start Spark session.
+#   2) Load appointments Parquet table.
+#   3) Aggregate monthly patient counts.
+#   4) Create lag features (previous 1 and 2 months) and seasonal month feature.
+#   5) Assemble features into a vector.
+#   6) Split data into train and test sets (safe 6-month horizon).
+#   7) Train Random Forest model and save it.
+#   8) Prepare test features using teacher forcing.
+#   9) Make predictions and collect actual values.
+#   10) Evaluate predictions using R², RMSE, MAE, MAPE, relative error, and statistics.
+#   11) Assess model quality.
+#   12) Stop Spark session.
+# -----------------------
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import trunc, countDistinct, col, month as month_func, lag
 from pyspark.sql.window import Window

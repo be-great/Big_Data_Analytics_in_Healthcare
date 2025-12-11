@@ -1,3 +1,32 @@
+# -----------------------
+# Purpose: load a base LLM model, integrate LoRA adapters, and build a GLORA model using hospital KBs.
+#
+# Objects:
+#   - PyTorch & Transformers: for model loading and inference.
+#   - PeftModel / LoRA adapters: lightweight fine-tuning for specific KB knowledge.
+#   - SentenceTransformer: for embedding KB facts.
+#   - FAISS: for storing embeddings for fast retrieval.
+#   - SparkSession: used if needed to read Parquet datasets for lightweight examples.
+#   - Dataset (HuggingFace): prepares LoRA training examples.
+#   - KB_PATHS: dictionary of knowledge base paths (facts + FAISS indices).
+#   - load_model(): loads base model, tokenizer, embedder, and FAISS indexes.
+#   - create_glora_model(): prepares LoRA training data and trains LoRA adapters.
+#
+# Flow:
+#   1) Define KB paths and output folders.
+#   2) load_model():
+#        - Load FAISS indexes and facts.
+#        - Load embedding model (SentenceTransformer).
+#        - Load base LLM + LoRA adapter.
+#        - Return model, tokenizer, embedder, and KBs.
+#   3) create_glora_model():
+#        - Generate lightweight LoRA training examples from KBs.
+#        - Tokenize examples.
+#        - Configure LoRA and prepare base model for training.
+#        - Train adapter on CPU (safe for low-resource setups).
+#        - Save trained LoRA adapter and tokenizer.
+# -----------------------
+
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
@@ -24,7 +53,10 @@ KB_PATHS = {
     "top_specializations": os.path.join(base_file, "data/output/kb/top_specializations"),
     "hospital_experience": os.path.join(base_file, "data/output/kb/hospital_experience"), # Added missing KB path
 }
-
+"""
+load_model: function that loads base LLM, LoRA adapter, embeddings, and FAISS KBs
+return: model, kb_indexes, kb_facts, embedder, tokenizer
+"""
 def load_model():
     # ====== CONFIG ======
     TOP_K = 3
@@ -61,10 +93,20 @@ def load_model():
 
     
     return model, kb_indexes, kb_facts, embedder, tokenizer
+
+"""
+create_glora_model: function that creates LoRA adapter for GLORA
+return: None (saves LoRA adapter and tokenizer)
+"""
 def create_glora_model():
     # 1″ Load small dataset from Parquet
     spark = SparkSession.builder.appName("MakeSFTDataCPU").getOrCreate()
     #create_lightweight_training_examples
+    """
+    fmt: function that formats training examples from KB facts
+    kb_paths_dict: dictionary of KB names and paths
+    return: list of dicts with 'text' for LoRA training
+    """
     def fmt(kb_paths_dict):
         """
         Generate lightweight LoRA training examples:
@@ -122,7 +164,7 @@ def create_glora_model():
     train_data = fmt(KB_PATHS)
     dataset = Dataset.from_list(train_data)
 
-    # 2″ Load base model normally (no quantization)
+    # 2- Load base model normally (no quantization)
     model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     if tokenizer.pad_token is None:
@@ -130,14 +172,19 @@ def create_glora_model():
 
     base = AutoModelForCausalLM.from_pretrained(model_name)
     base = prepare_model_for_kbit_training(base) 
-    # 3″ LoRA config
+    # 3- LoRA config
     lconf = LoraConfig(
         r=8, lora_alpha=16, lora_dropout=0.1,
         bias="none", task_type="CAUSAL_LM",
         target_modules=["q_proj", "v_proj"])
     model = get_peft_model(base, lconf)
 
-    # 4″ Tokenization
+    # 4- Tokenization
+    """
+    tok: function that tokenizes LoRA training examples
+    ex: dictionary containing "text" key (LoRA training example)
+    return: dictionary with tokenized input_ids, attention_mask, and labels
+    """
     def tok(ex):
         out = tokenizer(ex["text"], truncation=True, padding="max_length", max_length=256)
         out["labels"] = out["input_ids"].copy()
@@ -145,7 +192,7 @@ def create_glora_model():
 
     tokenized = dataset.map(tok, batched=True, remove_columns=["text"])
 
-    # 5″ Training (CPU-safe)
+    # 5- Training (CPU-safe)
     train_args = TrainingArguments(
         output_dir=output_folder,
         per_device_train_batch_size=1,
@@ -155,14 +202,14 @@ def create_glora_model():
         logging_steps=10,
         save_steps=200,
         save_total_limit=2,
-        use_cpu=True,      # ⬅️ ensures CPU only
+        use_cpu=True,      # ensures CPU only
         optim="adamw_torch" # Explicitly set optimizer to a valid option for CPU training
     )
     print("Starting training the model ")
     trainer = Trainer(model=model, args=train_args, train_dataset=tokenized)
     trainer.train()
 
-    # 6″ Save adapter
+    # 6- Save adapter
     model = model.to('cpu') # Move model to CPU explicitly before saving
     model.save_pretrained(output_folder)
     tokenizer.save_pretrained(output_folder)

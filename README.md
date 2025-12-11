@@ -1,4 +1,4 @@
-# Designing Localized Lightweight LLMsfor Domains Specific Application
+# Designing Localized Lightweight LLMs for Domain-Specific Applications
 This project develops a lightweight, domain-specific AI system that integrates hospital visitor prediction, knowledge-base creation, and interactive querying to support efficient data-driven decision-making.
 ### introduction
 
@@ -152,6 +152,16 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 ## Connection To Current Project
 This project aims to create a localized, lightweight LLM for domain-specific applications, with a case study on Healthcare Management. Parquet is used to compress data and speed up loading during processing. Faiss builds a vector-based knowledge base, enabling efficient retrieval without memorizing all data, reducing memory usage and improving scalability. QLoRA fine-tunes the LLM on domain-specific tasks using low-rank adapters, reducing both computation and memory requirements.
+##  Motivations
+Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.
+
+# Background
+Recent work on BLoRA and quantized adapters shows that memory-efficient fine-tuning can still keep strong accuracy by balancing adapter dimensions and aligning with block-wise quantization. These methods make lightweight clinical models more practical for hospital analytics and scalable medical NLP. [1] Studies on FAISS highlight its ability to handle million-scale vectors using flat, HNSW, IVF, and PQ-based indexes.[2] Work combining FAISS with a T5 model for radiology summarization showed that retrieval improves semantic and clinical consistency but with the limitation of some factual issues. This makes FAISS suitable for fast retrieval over large clinical embeddings and similarity-based healthcare applications  [3] Research comparing Parquet, ORC, and Arrow showed that Parquet gives the best compression, ORC excels in selective queries, and Arrow provides fast in-memory access. [4]
+
+1.	Shen, A., Lai, Z., Li, D., & Hu, X. (2025). Optimizing Fine-Tuning in Quantized Language Models: An In-Depth Analysis of Key Variables. Computers, Materials & Continua, 82(1), 307–325. https://doi.org/10.32604/cmc.2024.057491
+2.	Douze, M., Guzhva, A., Deng, C., Johnson, J., Szilvasy, G., Mazaré, P.-E., Lomeli, M., Hosseini, L., & Jégou, H. (2025). The FAISS library. IEEE Transactions on Big Data. https://doi.org/10.1109/TBDATA.2025.3618474
+3.	 Arısoy, A. (2025). A Hybrid Retrieval-And-Generation Framework for Radiology Report Summarization With FAISS Indexing and T5 Transformers. Süleyman Demirel Üniversitesi Fen Bilimleri Enstitüsü Dergisi, 29(2), 483–492. https://doi.org/10.19113/sdufenbed.1739565
+4.	 Ao Shen , Zhiquan Lai , Dongsheng Li , Xiaoyu Hu (2025). Data formats in analytical DBMSs: performance trade-offs and future directions. The VLDB Journal, 34, 30. https://doi.org/10.1007/s00778-025-00911-1
 
 ## The Datasets That Have Been Used
 1. https://www.kaggle.com/datasets/kanakbaghel/hospital-management-dataset
@@ -160,8 +170,6 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 4. https://huggingface.co/datasets/awsaf49/persona-chat
 
 **Info: The data in data/curated_parquet and data/data_csv is only a sample. The results were obtained using the full datasets from the sources mentioned above.**
-##  Motivations
-Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.
 
 ## Technologies :- 
 
@@ -169,12 +177,6 @@ Before the rise of machine learning, earlier models struggled to understand the 
 - Parquet: efficient storage format.
 - FAISS: semantic knowledge retrieval.
 - QLoRA: lightweight LLM fine-tuning
-
-# Suggestions For Future Work
-- Expand knowledge base across multiple hospital domains.
-- Improve LLM interpretability and prediction accuracy.
-- Utilize a catalog to enhance multimodal data organization by leveraging Neuralink’s data repository, which provides a unified and scalable way to structure, access, and manage diverse data types efficiently.
-
 
 ## Methodology 
 ![img](imgs/meth.png)
@@ -267,5 +269,9 @@ To demonstrate the integration of the domain-specific models, we combined them i
 
 13- **data/output** : has all the models been build by the scripts (kb= knowledge bases, lr_model= logisticregressionmodel , vistor_predict_model, glora model )
 
+# Suggestions For Future Work
+- Expand knowledge base across multiple hospital domains.
+- Improve LLM interpretability and prediction accuracy.
+- Utilize a catalog to enhance multimodal data organization by leveraging Neuralink’s data repository, which provides a unified and scalable way to structure, access, and manage diverse data types efficiently.
 
 Repository link : https://github.com/be-great/Big_Data_Analytics_in_Healthcare/

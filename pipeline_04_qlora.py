@@ -40,7 +40,7 @@ from datasets import Dataset
 base_file = ""
 BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 output_folder = "data/output/glora"
-ADAPTER_PATH = os.path.join(base_file, "data/output/glora")  # Using os.path.join
+ADAPTER_PATH = os.path.join(base_file, "data/output/glora")
 KB_PATHS = {
     "doctors": os.path.join(base_file, "data/output/kb/doctors"),
     "patients": os.path.join(base_file, "data/output/kb/patients"),

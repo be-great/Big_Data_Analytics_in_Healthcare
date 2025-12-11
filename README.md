@@ -159,11 +159,9 @@ This project aims to create a localized, lightweight LLM for domain-specific app
 3. https://github.com/abachaa/MTS-Dialog
 4. https://huggingface.co/datasets/awsaf49/persona-chat
 
+**Info: The data in data/curated_parquet and data/data_csv is only a sample. The results were obtained using the full datasets from the sources mentioned above.**
 ##  Motivations
 Before the rise of machine learning, earlier models struggled to understand the context of long sentences. To improve language understanding and create a general-purpose model, large language models (LLMs) were introduced. Businesses and sectors began to see new technological solutions to help them stay ahead of the curve and introduced new roles, such as the Prompt Engineer, to optimize LLM behavior. Therefore, when using external large language model (LLM) providers, companies faced new challenges regarding data privacy. That is why this project has been developed.
-
-
-
 
 ## Technologies :- 
 
@@ -234,6 +232,9 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 
 ## A Chat-Based Then Been Developed
 
+To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage.
+
+![result5](imgs/result5.png)
 ## Project Setup Environment
 
 - Ubuntu 22.04 with NVIDIA CUDA on WSL
@@ -258,7 +259,7 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 
 9- **pipeline_05_domain_classifier.py**: Create a query classification model.  
 
-10- **chat.py**: The chat AI.  
+10- **chat.py**: The chat AI sample.  
 
 11- **data/data_csv**: csv data folder
 

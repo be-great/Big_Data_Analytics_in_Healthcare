@@ -71,7 +71,7 @@ def build_kb(df, name, text_func):
     # Save FAISS index and texts
     faiss.write_index(index, f"{out}/{name}.index")
     np.save(f"{out}/{name}_facts.npy", np.array(texts))
-    print(f"✅ {name.capitalize()} knowledge base saved ({len(texts)} facts)")
+    print(f" {name.capitalize()} knowledge base saved ({len(texts)} facts)")
 
 # ---- Define text builders for each dataset ----
 build_kb(

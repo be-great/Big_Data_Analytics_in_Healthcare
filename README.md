@@ -183,11 +183,11 @@ Recent work on BLoRA and quantized adapters shows that memory-efficient fine-tun
 
 ## Methodology 
 
-### data collection
+### Data Collection
 The dataset used in this project is a structured, multi-table dataset designed to simulate a hospital management system.The first dataset is used for creating the knowledge base, the second dataset is used for domain specific classification, and the third dataset is used for non-domain specific classification. The first dataset contains five CSV files: doctors, which contain personal information about each doctor; patients, which contain personal information about each patient; appointments, which contain information about appointments made by patients; treatments, which contain information about treatments diagnosed by doctors for patients and billing, which contains information related to treatment costs. The second dataset contains dialogues between doctors and patients representing domain-specific content. Lastly, the non-domain-specific dataset contains dialogues representing non-domain-specific content.
-### Data processing
+### Big Data Processing
 After data collection, we clean it by converting text to lowercase, removing unwanted symbols, and eliminating duplicates. The original CSV data is saved in Parquet format to enable more efficient storage, faster queries, and better compression for subsequent processing.
-### Data analysis
+### Data Analysis
 For data analysis, the study focused on five key research questions: -
 A — Which gender goes to the hospital more?
 
@@ -201,9 +201,9 @@ E — What is the ranking of treatments by cost?
 
 ### Feature Enrichment via Model Prediction
 To support the healthcare management system in resource planning, a predictive model using the RandomForestRegressor algorithm was implemented to forecast the expected number of visitors for the next month, enabling efficient preparation and resource allocation.
-### Faiss: knowledge base construction
+### Faiss: Knowledge Base Construction
 Vector databases typically manage large collections of embedding vectors. Currently, AI applications are growing rapidly, and so is the number of embeddings that need to be stored and indexed. The Faiss library is dedicated to vector similarity search, a core functionality of vector databases. Faiss is a toolkit of indexing methods and related primitives used to search, cluster, compress and transform vectors. In the paper, knowledge based been created for each parquet file from the first dataset. 
-### QLoRA: quantized low-rank adaptation
+### QLoRA: Quantized Low-Rank Adaptation
 QLoRA is an efficient fine-tuning approach that significantly reduces GPU memory requirements, enabling fine-tuning of models with up to 65 billion parameters on a single 48 GB GPU while preserving full 16-bit fine-tuning performance [8]. In this study, QLoRA was applied to the TinyLlama-1.1B-Chat-v1.0 model to fine-tune the model for question-answering tasks.
 ### Domain and Non-Domain Classifier
 Using the second and third datasets, a domain and non-domain classification model was developed using the logistic regression algorithm. Text features were extracted from dialogue data and used to train the classifier to distinguish between domain-specific and non-domain-specific content.
@@ -230,7 +230,32 @@ For logistic regression (regression setting), model performance was evaluated us
 For domain and non-domain text classification using logistic regression, evaluation relied on Accuracy, Precision, Recall and F1-score.
 ### A Prototype Chat-Based Then Been Developed
  To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage. Below is the pseudocode demonstrating the implementation.
+```
+Algorithm 1: Domain-Aware QA System using LogisticRegression, FAISS, and Fine-tuned TinyLLM
+---------------------------------------------------------
+Input: q - User query
+Output: answer - Predicted answer or result
 
+1: Initialize SparkSession
+2: Load LogisticRegression model
+3: Load FAISS library
+4: Load Fine-tuned TinyLLM (GLoRA)
+
+5: Receive user query q
+
+6: if isDomainQuestion(q) then
+7:     Select appropriate knowledge base KB
+8:     facts = FAISS.retrieveFacts(q, KB)
+9:     prompt = constructPrompt(facts)
+10:  answer = TinyLLM.generateAnswer(prompt)
+11: else
+12:    prediction = LogisticRegression.predict(q)
+13:    answer = formatPrediction(prediction)
+14: end if
+15: Display answer
+
+
+```
 
 ![img](imgs/meth.png)
 

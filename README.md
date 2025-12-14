@@ -231,7 +231,7 @@ For domain and non-domain text classification using logistic regression, evaluat
 ### A Prototype Chat-Based Then Been Developed
  To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage. Below is the pseudocode demonstrating the implementation.
 ```
-Algorithm 1: Domain-Aware QA System using LogisticRegression, FAISS, and Fine-tuned TinyLLM
+Algorithm 1: Domain-Aware QA System using LogisticRegression, FAISS and Fine-tuned TinyLLM
 ---------------------------------------------------------
 Input: q - User query
 Output: answer - Predicted answer or result
@@ -260,7 +260,7 @@ Output: answer - Predicted answer or result
 ![img](imgs/meth.png)
 
 ## Findings obtained
-### Data analyzing:-
+### Data Analyzing
 ![gender](imgs/result_1_gender.png)
 ![experience](imgs/experience_doctor.png)
 ![special_dominates](imgs/speciliest_dominace.png)

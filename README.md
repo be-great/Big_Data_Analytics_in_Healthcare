@@ -182,9 +182,13 @@ Recent work on BLoRA and quantized adapters shows that memory-efficient fine-tun
 - QLoRA: lightweight LLM fine-tuning
 
 ## Methodology 
-![img](imgs/meth.png)
 
-## Questions That Used For Data Analysis:-
+### data collection
+The dataset used in this project is a structured, multi-table dataset designed to simulate a hospital management system.The first dataset is used for creating the knowledge base, the second dataset is used for domain specific classification, and the third dataset is used for non-domain specific classification. The first dataset contains five CSV files: doctors, which contain personal information about each doctor; patients, which contain personal information about each patient; appointments, which contain information about appointments made by patients; treatments, which contain information about treatments diagnosed by doctors for patients and billing, which contains information related to treatment costs. The second dataset contains dialogues between doctors and patients representing domain-specific content. Lastly, the non-domain-specific dataset contains dialogues representing non-domain-specific content.
+### Data processing
+After data collection, we clean it by converting text to lowercase, removing unwanted symbols, and eliminating duplicates. The original CSV data is saved in Parquet format to enable more efficient storage, faster queries, and better compression for subsequent processing.
+### Data analysis
+For data analysis, the study focused on five key research questions: -
 A — Which gender goes to the hospital more?
 
 B — Which hospital branch has the most experienced doctors?
@@ -195,23 +199,16 @@ D — What is the most common reason for visits?
 
 E — What is the ranking of treatments by cost?
 
-Then with the help of RandomForestRegressor algorithm, we predict the expected number of visitors for the next month to help the healthcare management system prepare and allocate resources efficiently.
-## Findings obtained
-### Data analyzing:-
-![gender](imgs/result_1_gender.png)
-![experience](imgs/experience_doctor.png)
-![special_dominates](imgs/speciliest_dominace.png)
-![reason_for_visit](imgs/reason_for_visit.png)
-![cost](imgs/treatment_cost.png)
-### Number of visitors prediction 
-![result2](imgs/result2.png)
-### Faiss
-For evaluating knowledge base performance, a randomly selected subset of the dataset was used. Random sampling provides a representative overview of retrieval metrics while maintaining efficiency in analysis.precision, recall, MRR, and NDCG indicate the system’s effectiveness in retrieving relevant facts.
-
-![faiss](imgs/result3.png)
-
-
-#### In-KB Metrics
+### Feature Enrichment via Model Prediction
+To support the healthcare management system in resource planning, a predictive model using the RandomForestRegressor algorithm was implemented to forecast the expected number of visitors for the next month, enabling efficient preparation and resource allocation.
+### Faiss: knowledge base construction
+Vector databases typically manage large collections of embedding vectors. Currently, AI applications are growing rapidly, and so is the number of embeddings that need to be stored and indexed. The Faiss library is dedicated to vector similarity search, a core functionality of vector databases. Faiss is a toolkit of indexing methods and related primitives used to search, cluster, compress and transform vectors. In the paper, knowledge based been created for each parquet file from the first dataset. 
+### QLoRA: quantized low-rank adaptation
+QLoRA is an efficient fine-tuning approach that significantly reduces GPU memory requirements, enabling fine-tuning of models with up to 65 billion parameters on a single 48 GB GPU while preserving full 16-bit fine-tuning performance [8]. In this study, QLoRA was applied to the TinyLlama-1.1B-Chat-v1.0 model to fine-tune the model for question-answering tasks.
+### Domain and Non-Domain Classifier
+Using the second and third datasets, a domain and non-domain classification model was developed using the logistic regression algorithm. Text features were extracted from dialogue data and used to train the classifier to distinguish between domain-specific and non-domain-specific content.
+### Evaluation
+For logistic regression (regression setting), model performance was evaluated using RMSE, MAE, MAPE, and R^2. For FAISS-based In-KB retrieval, the following metrics were employed:
 - **Precision@k:** Fraction of top‑k retrieved facts that are correct.  
 - **Recall@k:** Fraction of all relevant facts that appear in the top‑k results.  
 - **MRR (Mean Reciprocal Rank):** Average of reciprocal ranks of the first correct fact; higher values indicate correct results appear earlier.  
@@ -230,14 +227,31 @@ For evaluating knowledge base performance, a randomly selected subset of the dat
 - **Separable_pct_noise:** Fraction of noise distances that exceed in-KB distances, showing clear distinction.  
 - **AUC_noise:** Probability that an in-KB fact is closer to the query than a noise vector.
 
+For domain and non-domain text classification using logistic regression, evaluation relied on Accuracy, Precision, Recall and F1-score.
+### A Prototype Chat-Based Then Been Developed
+ To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage. Below is the pseudocode demonstrating the implementation.
+
+
+![img](imgs/meth.png)
+
+## Findings obtained
+### Data analyzing:-
+![gender](imgs/result_1_gender.png)
+![experience](imgs/experience_doctor.png)
+![special_dominates](imgs/speciliest_dominace.png)
+![reason_for_visit](imgs/reason_for_visit.png)
+![cost](imgs/treatment_cost.png)
+### Number of visitors prediction 
+![result2](imgs/result2.png)
+### Faiss: knowledge base performance
+![faiss](imgs/result3.png)
+
 ### Domain and Non-Domain Text Logistic Regression Classifier
 
 ![result4](imgs/result4.png)
 - Two datasets were used (MTS-Dialog and Persona-Chat). Therefore, user input can be classified as personal chat or domain-specific chat. When the user input classified as  domain-specific the model generates the appropriate context by retrieving relevant informations from the knowledge bases.
 
 ## A Chat-Based Then Been Developed
-
-To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage.
 
 ![result5](imgs/result5.png)
 ## Project Setup Environment

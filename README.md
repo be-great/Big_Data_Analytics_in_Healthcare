@@ -231,29 +231,29 @@ For domain and non-domain text classification using logistic regression, evaluat
 ### A Prototype Chat-Based Then Been Developed
  To demonstrate the integration of the domain-specific models, we combined them into a chat system. While the primary evaluation focused on the individual models (e.g., KB retrieval, visitor prediction, and classification), the chat interface shows practical usage. Below is the pseudocode demonstrating the implementation.
 ```
-Algorithm 1: Domain-Aware QA System using LogisticRegression, FAISS and Fine-tuned TinyLLM
----------------------------------------------------------
+Algorithm 1: Prototype Chat-Based QA System using Logistic Regression, FAISS, and Fine-Tuned TinyLLM
+---------------------------------------------------------------
 Input: q - User query
-Output: answer - Predicted answer or result
-
-1: Initialize SparkSession
-2: Load LogisticRegression model
-3: Load FAISS library
-4: Load Fine-tuned TinyLLM (GLoRA)
-
-5: Receive user query q
-
-6: if isDomainQuestion(q) then
-7:     Select appropriate knowledge base KB
-8:     facts = FAISS.retrieveFacts(q, KB)
-9:     prediction = LogisticRegression.predict(q)
-10:    prompt = constructPrompt(facts, prediction)   
-11:    answer = TinyLLM.generateAnswer(prompt)
-12: else
-13:    answer = TinyLLM.generateAnswer(q)
-14: end if
-15: Display answer
-
+Output: answer - Answer from query entered by the user
+1:  Initialize SparkSession
+2:  Load LogisticRegression model
+3:  Load FAISS library
+4:  Load Fine-tuned TinyLLM (GLoRA)
+5:  Receive user query q
+6:  if isDomainQuestion(q) then
+7:    if isPredictNumberOfVisitorsForNextMonth(q): then
+8: 		   prediction = LogisticRegression.predict(q)
+9:		    prompt = constructPrompt(prediction)
+10:   else
+11:     Select appropriate knowledge base KB
+12:     facts = FAISS.retrieveFacts(q, KB)
+13:     prompt = constructPrompt(facts)
+14:   answer = TinyLLM.generateAnswer(prompt)
+15:   end if
+16: else
+17:   answer = TinyLLM.generateAnswer(q)
+18: end if   	
+19: Display answer
 
 ```
 

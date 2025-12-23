@@ -246,11 +246,11 @@ Output: answer - Predicted answer or result
 6: if isDomainQuestion(q) then
 7:     Select appropriate knowledge base KB
 8:     facts = FAISS.retrieveFacts(q, KB)
-9:     prompt = constructPrompt(facts)
-10:    answer = TinyLLM.generateAnswer(prompt)
-11: else
-12:    prediction = LogisticRegression.predict(q)
-13:    answer = formatPrediction(prediction)
+9:     prediction = LogisticRegression.predict(q)
+10:    prompt = constructPrompt(facts, prediction)   
+11:    answer = TinyLLM.generateAnswer(prompt)
+12: else
+13:    answer = TinyLLM.generateAnswer(q)
 14: end if
 15: Display answer
 

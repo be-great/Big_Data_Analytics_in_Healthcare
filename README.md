@@ -247,7 +247,7 @@ Output: answer - Predicted answer or result
 7:     Select appropriate knowledge base KB
 8:     facts = FAISS.retrieveFacts(q, KB)
 9:     prompt = constructPrompt(facts)
-10:  answer = TinyLLM.generateAnswer(prompt)
+10:    answer = TinyLLM.generateAnswer(prompt)
 11: else
 12:    prediction = LogisticRegression.predict(q)
 13:    answer = formatPrediction(prediction)

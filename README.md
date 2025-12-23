@@ -279,6 +279,8 @@ Output: answer - Answer from query entered by the user
 ## A Chat-Based Then Been Developed
 
 ![result5](imgs/result5.png)
+
+**The proposed system is lightweight in terms of resource requirements. After loading the quantized base LLM, domain-specific FAISS indexes, QLoRA adapters (if used), embedder, and PySpark domain classifier, the entire pipeline consumes only 4.46 GB of RAM. This enables deployment on standard hospital workstations without requiring high-end GPUs or excessive memory, making it suitable for real-world domain-specific applications.**
 ## Project Setup Environment
 
 - Ubuntu 22.04 with NVIDIA CUDA on WSL

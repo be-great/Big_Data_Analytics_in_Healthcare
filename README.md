@@ -1,4 +1,4 @@
-# Designing Localized Lightweight LLMs for Domain-Specific Applications: A Case Study Of Hospital Management 
+# Designing Localized LLMs for Domain-Specific Applications: A Case Study Of Hospital Management 
 ## Project Summary
 
 This project focuses on big data analytics in the healthcare domain. The goal is to analyze large hospital dataset, answer five data analysis scenarios and build a prediction model for next-month visitors. The data is processed and stored using Parquet for faster loading. FAISS is used to create knowledge bases for fast semantic retrieval. A lightweight domain-specific LLM is then developed using QLoRA, and a logistic regression classifier separates domain and non-domain user inputs. Finally, all components are integrated into a simple chat system that shows how the models work together. This setup supports efficient data processing, knowledge retrieval, and domain-aware interaction in a healthcare setting.

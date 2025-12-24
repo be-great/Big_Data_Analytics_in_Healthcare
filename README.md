@@ -54,7 +54,6 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 ### Technologies
 - Apache Spark (streaming + batch processing).
-- IoT sensor data.
 - Spark-based machine learning modules.
 
 ### Results obtained

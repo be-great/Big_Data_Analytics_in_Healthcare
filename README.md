@@ -12,7 +12,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 
 1. **Data Collection:** Acquire datasets from hospital records, EHRs, IoT sensors, or clinical databases.  
 2. **Data Preprocessing:** Clean data, handle missing values, normalize or encode features, and remove inconsistencies.  
-3. **Feature Engineering / Selection:** Extract relevant features.  
+3. **Feature Engineering / Selection:** Extract relevant features. But most of the papers do not explicitly describe a feature selection method.
 4. **Modeling:** Train predictive or classification models using Spark MLlib or deep learning frameworks (e.g., Random Forest, Gradient Boosting, TCN).  
 5. **Evaluation:** Validate models using metrics like Accuracy, AUC, RMSE, MAE, and/or real-time performance.  
 
@@ -22,7 +22,8 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** 2M+ outpatient appointments from hospital EMRs.  
 - **Preprocessing:** Cleaned records, encoded categorical variables, normalized numerical features.  
-- **Feature Engineering / Selection:** Behavioral (prior no-shows), temporal (lead-time, month), operational (department, clinic); top features ranked using information gain.  
+- **Feature Engineering / Selection:** Using information gain, which measures how much a feature reduces prediction uncertainty when used to split the data.
+
 - **Modeling:** Random Forest, Gradient Boosting, Logistic Regression, SVM, MLP (Spark MLlib).
 - **Evaluation:** Accuracy,  AUC, cross-validation.
 
@@ -48,7 +49,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Streaming IoT sensors + historical patient records.  
 - **Preprocessing:** Feature extraction from both historical and streaming data; handling missing or noisy sensor data.  
-- **Feature Engineering / Selection:** Relevant physiological and contextual indicators extracted in real-time.  
+- **Feature Engineering / Selection:** The paper does not explicitly describe a feature selection method.  
 - **Modeling:** Decision Tree, Random Forest, Gradient Boosting (on Spark Streaming pipeline).
 - **Evaluation:** Accuracy, Precision, Recall, F1-score.
 
@@ -77,7 +78,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Large-scale EHR datasets across multiple hospitals.  
 - **Preprocessing:** Data cleaning, handling missing or inconsistent entries, normalization.  
-- **Feature Engineering / Selection:** Extracted clinical and demographic features relevant for diabetes prediction. Using ranking/selection methods to choose predictive features. 
+- **Feature Engineering / Selection:** The paper does not explicitly describe a feature selection method. 
 - **Modeling:** Random Forest, Logistic Regression, Gradient Boosting (Spark MLlib).
 - **Evaluation:** Accuracy, Precision, Recall, F1-score.
 
@@ -102,7 +103,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Multiple healthcare datasets including EHR, imaging, and remote monitoring.  
 - **Preprocessing:** Standardized data pipelines for batch and streaming analyses.  
-- **Feature Engineering / Selection:** Using information gain or standard ranking methods described in studies to select predictive features.  
+- **Feature Engineering / Selection:** The paper does not explicitly describe a feature selection method.
 - **Modeling:** ML models (Random Forest, Logistic Regression) and AI frameworks integrated with Spark.
 - **Evaluation:** Efficiency, speed, scalability.
 ### Technologies
@@ -128,7 +129,7 @@ As large language models (LLMs) continue to be adopted across a range of real-wo
 ### Method
 - **Data Collection:** Streaming physiological data from MIMIC-III dataset.  
 - **Preprocessing:** Sliding-window time-series creation; normalization; handling missing data.  
-- **Feature Engineering / Selection:** Using information gain and temporal feature analysis to select predictive features.
+- **Feature Engineering / Selection:** The paper does not explicitly describe a feature selection method.
 - **Modeling:** Multi-task Temporal Convolutional Network (TCN); real-time Spark + Kafka pipeline.
 - **Evaluation:** RMSE, MAE.
 
